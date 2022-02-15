@@ -1,0 +1,22 @@
+{
+  "name": "tolar_json_rpc_api",
+  "version": "0.0.0",
+  "description": "Collection of JSON-RPC APIs provided by Tolar clients",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "lint": "node scripts/build.js && node scripts/validate.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tolar-HashNET/Tolar-JSON-RPC-API.git"
+  },
+  "author": "Tolar",
+  "license": "Unknown",
+  "homepage": "https://github.com/Tolar-HashNET/Tolar-JSON-RPC-API#readme",
+  "dependencies": {
+    "@open-rpc/schema-utils-js": "^1.15.0",
+    "json-schema-merge-allof": "^0.8.1"
+  }
+}

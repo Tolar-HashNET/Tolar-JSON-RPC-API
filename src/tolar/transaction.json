@@ -1,0 +1,22 @@
+[
+  {
+    "name": "tx_sendSignedTransaction",
+    "summary": "Send signed transaction.",
+    "params": [
+      {
+        "name": "signed_transaction",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/SignedTransaction"
+        }
+      }
+    ],
+    "result": {
+      "name": "hash",
+      "description": "Hash of created transaction that can be used to obtain information about created transaction.",
+      "schema": {
+        "$ref": "#/components/schemas/hash"
+      }
+    }
+  }
+]

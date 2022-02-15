@@ -1,0 +1,107 @@
+
+{
+  "Transaction": {
+    "type": "object",
+    "title": "Transaction object",
+    "required": [ "sender_address", "sig_data", "receiver_address", "value", "gas", "gas_price", "nonce", "network_id"],
+
+    "properties": {
+      "sender_address": {
+        "title": "Sender address",
+        "description": "Sender address in tolar format.",
+        "$ref": "#/components/schemas/address"
+      },
+
+      "receiver_address": {
+        "title": "Receiver address",
+        "description": "Receiver address in tolar format.",
+        "$ref": "#/components/schemas/address"
+      },
+
+      "value": {
+        "title": "Value",
+        "description": "Amount of atto tolar to send.",
+        "$ref": "#/components/schemas/uint256"
+      },
+
+      "gas": {
+        "title": "Gas",
+        "description": "Maximum gas (gas limit) that will be spent to send this transaction.Gas used for transaction sending or computational work in case of smart contracts.",
+        "$ref": "#/components/schemas/uint256"
+      },
+
+      "gas_price": {
+        "title": "Gas price",
+        "description": "Amount of gas to pay for each unit of gas. Greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price).",
+        "$ref": "#/components/schemas/uint256"
+      },
+
+      "data": {
+        "title": "Data",
+        "description": "Smart contract bytecode in hex format.",
+        "$ref": "#/components/schemas/bytes"
+      },
+
+      "nonce": {
+        "title": "Nonce",
+        "description": "Unique transaction index for this sender address (auto-incremented value, each transaction has unique nonce).",
+        "$ref": "#/components/schemas/uint256"
+      },
+
+      "network_id": {
+        "$ref": "#/components/schemas/network_id"
+      }
+    }
+  },
+
+  "SignatureData": {
+    "title": "Signature data",
+    "type": "object",
+    "description": "Holds information about transaction signer and signature.",
+    "required": [ "hash", "signature", "signer_id"],
+
+    "properties": {
+      "hash": {
+        "title": "Hash",
+        "description": "Transaction hash.",
+        "$ref": "#/components/schemas/hash"
+      },
+
+      "signature": {
+        "title": "Signature",
+        "description": "Signed transaction hash.",
+        "$ref": "#/components/schemas/hash"
+      },
+
+      "signer_id": {
+        "title": "Signer id",
+        "description": "Signers public key.",
+        "type": "string",
+        "pattern": "^[0-9,a-f,A-F]{128}$"
+      }
+    }
+  },
+
+  "SignedTransaction": {
+    "title": "Signed transaction",
+    "type": "object",
+    "description": "Holds transaction object and its signature info.",
+    "required": [ "body", "sig_data"],
+
+    "properties": {
+      "body": {
+        "title": "Body",
+        "$ref": "#/components/schemas/Transaction"
+      },
+
+      "sig_data": {
+        "title": "Sign data",
+        "$ref": "#/components/schemas/SignatureData"
+      }
+    }
+  }
+}
+
+
+
+
