@@ -1,18 +1,18 @@
 [
   {
     "name": "tx_sendSignedTransaction",
-    "summary": "Send signed transaction.",
+    "description": "Send signed transaction.",
     "params": [
       {
         "name": "signed_transaction",
         "required": true,
         "schema": {
-          "$ref": "#/components/schemas/SignedTransaction"
+          "$ref": "#/components/schemas/bytes"
         }
       }
     ],
     "result": {
-      "name": "hash",
+      "name": "Hash",
       "description": "Hash of created transaction that can be used to obtain information about created transaction.",
       "schema": {
         "$ref": "#/components/schemas/hash"
@@ -20,30 +20,15 @@
     },
     "examples": [
       {
-        "name": "sendSignedTxExample",
+        "name": "Send signed transaction example",
         "params": [
           {
-            "name": "sendSignedTxExampleParam",
-            "value": {
-              "body": {
-                "sender_address": "54be2e48d44a4e73b9680cdc82eb7d856b0b4af84033ce2ef1",
-                "receiver_address": "54b6d4805bf6943c5875c0c7b67eda24b2bdacbf6eddcdcebb",
-                "value": "1",
-                "gas": "10000000",
-                "gas_price": "10",
-                "nonce": 0,
-                "network_id": 0
-              },
-              "sig_data": {
-                "hash": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f",
-                "signature": "5ac183736fe6b2eca7ddf66a72be8847a638e4bbe88678da23eec78073232aec06cc8913d461f408cd4b893981538ba0df6e87367ee74850e0066cab590091f501",
-                "signer_id": "748d7327a2c82d797a74469b18cd38c10f1d5d027a3e17889de121c9b4e2aea3c4ac5879c0782f505c34808a30151d603593ed05a53dd501b39c262e767713f6"
-              }
-            }
+            "name": "SendSignedTxExampleParam",
+            "value": "0a7f0a323534313235316236613766396337626439613739353266336466323532623164633462373063353464386233306430616430123235346634366436313839373335616466343266363730383864336633626238336137333639633934363265663966346230331a012a22030186a02a01013201013a010040eaadc0e52412ca020a4033376232363961376632663831326261326134373961346437393162306465643162313437383031316661333063623535313364666536306637643334306436128201383235383661653739306334656435366534356635343736316365346434636463633237623462623664333931333733653365396366333766333164326562653230383763303366363265333065623437393064343337643436633134663136343437656262616462613964333764336537323937663332303637303162643430301a80013438633138376530643362613531343531626432323465383561633134326137656638626662386161356663343334303761363164353535336562363263363838353131316537653162396234326365663166373438383532303330613734363230623565616233343432373664336230373863626335356264386238306263"
           }
         ],
         "result": {
-          "name": "sendSignedTxExampleResult",
+          "name": "Send signed transaction example result",
           "value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
         }
       }

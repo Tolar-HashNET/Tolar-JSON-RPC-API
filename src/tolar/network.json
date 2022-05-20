@@ -1,0 +1,69 @@
+[
+  {
+    "name": "net_peerCount",
+    "description": "Get current peer count in running HashNet network.",
+    "params": [],
+    "result": {
+      "name": "Peer count",
+      "schema": {
+        "$ref": "#/components/schemas/uint64"
+      }
+    },
+    "examples": [
+      {
+        "name": "Peer count example",
+        "params": [
+        ],
+        "result": {
+          "name": "Peer count example result",
+          "value": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "net_masterNodeCount",
+    "description": "Get current master nodes count in running HashNet network.",
+    "params": [],
+    "result": {
+      "name": "Master node count",
+      "schema": {
+        "$ref": "#/components/schemas/uint64"
+      }
+    },
+    "examples": [
+      {
+        "name": "Master node count example",
+        "params": [
+        ],
+        "result": {
+          "name": "Master node count example result",
+          "value": 8
+        }
+      }
+    ]
+  },
+  {
+    "name": "net_isMasterNode",
+    "description": "Check if this service is tolar HashNet master node.",
+    "params": [
+    ],
+    "result": {
+      "name": "Is master node",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Is master node example",
+        "params": [
+        ],
+        "result": {
+          "name": "Is master node example result",
+          "value": false
+        }
+      }
+    ]
+  }
+]

@@ -1,6 +1,4 @@
 node_modules/
-openrpc.json
-refs-openrpc.json
 data.json
 schema.json
 *.dic

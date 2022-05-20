@@ -39,7 +39,7 @@ The third tool can validate a live JSON-RPC provider hosted at
 data.json valid
 ```
 
-[playground]: https://playground.open-rpc.org/?schemaUrl=[missing]&uiSchema[appBar][ui:splitView]=false&uiSchema[appBar][ui:input]=false&uiSchema[appBar][ui:examplesDropdown]=false
+[playground]: https://playground.open-rpc.org/?uiSchema%5BappBar%5D%5Bui:splitView%5D=false&schemaUrl=https://raw.githubusercontent.com/Tolar-HashNET/Tolar-JSON-RPC-API/master/openrpc.json&uiSchema%5BappBar%5D%5Bui:input%5D=false
 [openrpc]: https://open-rpc.org
 [validator]: https://open-rpc.github.io/schema-utils-js/globals.html#validateopenrpcdocument
 [spellchecker]: https://facelessuser.github.io/pyspelling/

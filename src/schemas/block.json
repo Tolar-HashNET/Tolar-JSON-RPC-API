@@ -1,0 +1,39 @@
+{
+  "Block": {
+    "type": "object",
+    "title": "Transaction object",
+    "required": [
+      "block_index",
+      "block_hash",
+      "confirmation_timestamp",
+      "previous_block_hash",
+      "transaction_hashes"
+    ],
+    "properties": {
+      "block_index": {
+        "$ref": "#/components/schemas/block_index"
+      },
+      "block_hash": {
+        "title": "Block hash",
+        "description": "Blocks hash.",
+        "$ref": "#/components/schemas/hash"
+      },
+      "confirmation_timestamp": {
+        "$ref": "#/components/schemas/confirmation_timestamp"
+      },
+      "previous_block_hash": {
+        "title": "Previous block hash",
+        "description": "Block hash for the previous block in blockchain attached to this block.",
+        "$ref": "#/components/schemas/hash"
+      },
+      "transaction_hashes": {
+        "title": "Transaction hashes",
+        "description": "An array of transaction hashes contained in this block.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/hash"
+        }
+      }
+    }
+  }
+}

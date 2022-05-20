@@ -1,0 +1,2794 @@
+{
+	"openrpc": "1.2.6",
+	"info": {
+		"title": "Tolar JSON-RPC Specification",
+		"description": "A specification of the standard interface for Tolar clients.",
+		"license": {
+			"name": "Unknown",
+			"url": "https://unknown"
+		},
+		"version": "0.0.0"
+	},
+	"methods": [
+		{
+			"name": "account_create",
+			"description": "Creates new keystore.",
+			"params": [
+				{
+					"name": "master_password",
+					"description": "Locks entire keystore with this password if provided, if empty, keystore will not be locked.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "mnemonic",
+					"description": "12 words mnemonic used to initialize BIP39 deterministic key generation. If empty string is sent random mnemonic is generated.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Is account created",
+				"description": "True if account was successfully created, else false.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Create account example",
+					"description": "Creates keystore without master password.",
+					"params": [
+						{
+							"name": "master_password",
+							"value": ""
+						},
+						{
+							"name": "mnemonic",
+							"value": "siege van edit river asset always material powder swallow glad helmet wait"
+						}
+					],
+					"result": {
+						"name": "Create account example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_open",
+			"description": "Opens existing keystore.",
+			"params": [
+				{
+					"name": "master_password",
+					"description": "Unlocks keystore with this password if keystore was originally locked with the provided password.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Is account opened",
+				"description": "True if account was successfully created, else false.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Create account example",
+					"description": "Creates keystore without master password.",
+					"params": [
+						{
+							"name": "master_password",
+							"value": ""
+						},
+						{
+							"name": "mnemonic",
+							"value": "siege van edit river asset always material powder swallow glad helmet wait"
+						}
+					],
+					"result": {
+						"name": "Create account example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_listAddresses",
+			"description": "List all addresses in keystore attached to master or thin node.",
+			"params": [],
+			"result": {
+				"name": "Listed addresses",
+				"description": "All addresses in keystore.",
+				"schema": {
+					"type": "array",
+					"items": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "List addresses example",
+					"description": "Lists all addresses in keystore.",
+					"params": [],
+					"result": {
+						"name": "List addresses example result",
+						"value": [
+							"54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642",
+							"5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "account_verifyAddress",
+			"description": "Verifies if provided address string is in valid Tolar address format.",
+			"params": [
+				{
+					"name": "address",
+					"description": "Address in hex string format.",
+					"required": true,
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				}
+			],
+			"result": {
+				"name": "Is address valid",
+				"description": "True if address is in valid tolar format, else false.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Verify address example",
+					"description": "Checks invalid address and fails.",
+					"params": [
+						{
+							"name": "address",
+							"value": "abcdef123456"
+						}
+					],
+					"result": {
+						"name": "Verify address example result",
+						"value": false
+					}
+				}
+			]
+		},
+		{
+			"name": "account_createNewAddress",
+			"description": "Creates new address in keystore.",
+			"params": [
+				{
+					"name": "name",
+					"required": true,
+					"description": "Address description name.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_password",
+					"required": true,
+					"description": "Password to protect generate keypair for newly created address.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_hint",
+					"required": true,
+					"description": "Optional password hint for the selected password.",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Created address",
+				"description": "Newly created address.",
+				"schema": {
+					"title": "Hex encoded address",
+					"type": "string",
+					"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+					"pattern": "^54[0-9,a-f,A-F]{48}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Create new address example",
+					"params": [
+						{
+							"name": "name",
+							"value": "example address"
+						},
+						{
+							"name": "lock_password",
+							"value": "pass123"
+						},
+						{
+							"name": "lock_hint",
+							"value": ""
+						}
+					],
+					"result": {
+						"name": "Create new address example result",
+						"value": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7"
+					}
+				}
+			]
+		},
+		{
+			"name": "account_exportKeyFile",
+			"description": "Exports key file for selected address from keystore.",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Selected address for which export keypair information is required.",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Exported key file",
+				"description": "If successful, return key file in encrypted json format.",
+				"schema": {
+					"type": "string"
+				}
+			},
+			"examples": [
+				{
+					"name": "Export key file example",
+					"description": "Exports key file in encrypted json format for given address.",
+					"params": [
+						{
+							"name": "address",
+							"value": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642"
+						}
+					],
+					"result": {
+						"name": "Export key file example result",
+						"value": "{\n   \"address\":\"f9f02416d894487e7bbd9d74065f7996cbdbf52b\",\n   \"crypto\":{\n      \"cipher\":\"aes-128-ctr\",\n      \"cipherparams\":{\n         \"iv\":\"28fe2f484412dcdc1e2c56544e511d1c\"\n      },\n      \"ciphertext\":\"db10f6e015eb7d744a8de7a2ab2a97f4542c60cb48b846d441ae4add00b8a469\",\n      \"kdf\":\"scrypt\",\n      \"kdfparams\":{\n         \"dklen\":32,\n         \"n\":262144,\n         \"p\":1,\n         \"r\":8,\n         \"salt\":\"68caf683e20ae150d7f2150c25426caf178c2f2ee9082cfa784239838ae64b68\"\n      },\n      \"mac\":\"86006944babe7d7d80c08c29cd3defc7aebe1fd9bdc9d3aee2cb8f6382982d6e\"\n   },\n   \"id\":\"32addc9f-8942-93e9-f109-f6fa8776fdf1\",\n   \"version\":3\n}"
+					}
+				}
+			]
+		},
+		{
+			"name": "account_importKeyFile",
+			"description": "Imports key file to keystore.",
+			"params": [
+				{
+					"name": "json_key_file",
+					"required": true,
+					"description": "Key file in encrypted JSON format.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "name",
+					"required": true,
+					"description": "Name for imported address.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_password",
+					"required": true,
+					"description": "Lock password if original key file was password protected.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_hint",
+					"required": true,
+					"description": "Optional lock hint for lock password.",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Imported key file status",
+				"description": "Returns true if import succeeded, else false.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Import key file example",
+					"description": "Successfully imports key file.",
+					"params": [
+						{
+							"name": "json_key_file",
+							"value": "{\n   \"address\":\"f9f02416d894487e7bbd9d74065f7996cbdbf52b\",\n   \"crypto\":{\n      \"cipher\":\"aes-128-ctr\",\n      \"cipherparams\":{\n         \"iv\":\"28fe2f484412dcdc1e2c56544e511d1c\"\n      },\n      \"ciphertext\":\"db10f6e015eb7d744a8de7a2ab2a97f4542c60cb48b846d441ae4add00b8a469\",\n      \"kdf\":\"scrypt\",\n      \"kdfparams\":{\n         \"dklen\":32,\n         \"n\":262144,\n         \"p\":1,\n         \"r\":8,\n         \"salt\":\"68caf683e20ae150d7f2150c25426caf178c2f2ee9082cfa784239838ae64b68\"\n      },\n      \"mac\":\"86006944babe7d7d80c08c29cd3defc7aebe1fd9bdc9d3aee2cb8f6382982d6e\"\n   },\n   \"id\":\"32addc9f-8942-93e9-f109-f6fa8776fdf1\",\n   \"version\":3\n}"
+						},
+						{
+							"name": "name",
+							"value": "Imported Test Address"
+						},
+						{
+							"name": "lock_password",
+							"value": "pas123"
+						}
+					],
+					"result": {
+						"name": "Import key file example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_importRawPrivateKey",
+			"description": "Imports raw private key to keystore.",
+			"params": [
+				{
+					"name": "raw_private_key",
+					"required": true,
+					"description": "Raw private key, should be 64 hex chars long",
+					"schema": {
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]{64}$"
+					}
+				},
+				{
+					"name": "name",
+					"required": true,
+					"description": "Name for imported address.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_password",
+					"required": true,
+					"description": "Lock password if original key file was password protected.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "lock_hint",
+					"required": true,
+					"description": "Optional lock hint for lock password.",
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Imported raw private key status",
+				"description": "Returns true if import succeeded, else false.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Import raw private key example",
+					"description": "Successfully imports raw private key.",
+					"params": [
+						{
+							"name": "raw_private_key",
+							"value": "59186b6c7363dce5cf4fb46f8fb3668d5dabb038c126d80ade61523491a86334"
+						},
+						{
+							"name": "name",
+							"value": "Imported Test Address"
+						},
+						{
+							"name": "lock_password",
+							"value": "pas123"
+						},
+						{
+							"name": "lock_hint",
+							"value": "default pass"
+						}
+					],
+					"result": {
+						"name": "Import raw private key example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_listBalancePerAddress",
+			"description": "List all addresses stored in keystore with their associated name and current balance status.",
+			"params": [],
+			"result": {
+				"name": "Balance per addresses",
+				"description": "Array of addresses paired with their name and balance.",
+				"schema": {
+					"type": "array",
+					"items": {
+						"title": "Balance per address",
+						"type": "object",
+						"required": [
+							"address",
+							"balance"
+						],
+						"properties": {
+							"address": {
+								"title": "Address",
+								"type": "string",
+								"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+								"pattern": "^54[0-9,a-f,A-F]{48}$"
+							},
+							"balance": {
+								"title": "Balance",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+							},
+							"name": {
+								"title": "name",
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "List balance per address example",
+					"description": "Lists all addresses in keystore with its balances.",
+					"params": [],
+					"result": {
+						"name": "List balance per address example result",
+						"value": [
+							{
+								"address": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7",
+								"name": "",
+								"balance": "1570000000"
+							},
+							{
+								"address": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db",
+								"name": "CustomAddress",
+								"balance": "12400000000000"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "account_changePassword",
+			"description": "Changes master password used to lock entire keystore.",
+			"params": [
+				{
+					"name": "old_master_password",
+					"description": "The current master password used to lock keystore.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "new_master_password",
+					"description": "The new master password that will replace the current one.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Is password changed",
+				"description": "True if password change was successful, false otherwise.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Change password example",
+					"description": "Changes existing password successfully.",
+					"params": [
+						{
+							"name": "old_master_password",
+							"value": "old_pass"
+						},
+						{
+							"name": "new_master_password",
+							"value": "new_pass"
+						}
+					],
+					"result": {
+						"name": "Change password example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_changeAddressPassword",
+			"description": "Changes lock password for the single address used to lock its private key in keystore.",
+			"params": [
+				{
+					"name": "address",
+					"description": "Address for which password changing is required.",
+					"required": true,
+					"schema": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "old_password",
+					"description": "Current address password.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "new_password",
+					"description": "New address password that will replace the current one.",
+					"required": true,
+					"schema": {
+						"type": "string"
+					}
+				}
+			],
+			"result": {
+				"name": "Is address password changed",
+				"description": "True if address password change was successful, false otherwise.",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Change address password example",
+					"description": "Changes existing password for address.",
+					"params": [
+						{
+							"name": "address",
+							"value": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db"
+						},
+						{
+							"name": "old_password",
+							"value": "old_pass123"
+						},
+						{
+							"name": "new_password",
+							"value": "new_pass456"
+						}
+					],
+					"result": {
+						"name": "Change address password example result",
+						"value": true
+					}
+				}
+			]
+		},
+		{
+			"name": "account_sendRawTransaction",
+			"description": "Creates transaction from data given in request parameters. Verify and sign the transaction using keystore and then sends the transaction to the master node where it will be executed.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "receiver_address",
+					"required": true,
+					"schema": {
+						"title": "Receiver address",
+						"type": "string",
+						"description": "The address that received this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to send.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "sender_address_password",
+					"required": true,
+					"description": "The password to unlock private key for sender address, empty if address is not locked.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "data",
+					"required": true,
+					"description": "Smart contract bytecode in hex format.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"description": "Hash of created transaction that can be used to obtain information about created transaction.",
+				"schema": {
+					"title": "Hash",
+					"type": "string",
+					"pattern": "^[0-9,a-f,A-F]{64}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Send raw transaction example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "receiver_address",
+							"value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+						},
+						{
+							"name": "amount",
+							"value": "569000"
+						},
+						{
+							"name": "sender_address_password",
+							"value": "pas123"
+						},
+						{
+							"name": "gas",
+							"value": "21000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "data",
+							"value": ""
+						},
+						{
+							"name": "nonce",
+							"value": "7"
+						},
+						{
+							"name": "network_id",
+							"value": "1"
+						}
+					],
+					"result": {
+						"name": "Send raw transaction example result",
+						"value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
+					}
+				}
+			]
+		},
+		{
+			"name": "account_sendFundTransferTransaction",
+			"description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction used for transferring funds from the sender to the receiver address.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "receiver_address",
+					"required": true,
+					"schema": {
+						"title": "Receiver address",
+						"type": "string",
+						"description": "The address that received this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to send.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "sender_address_password",
+					"required": true,
+					"description": "The password to unlock private key for sender address, empty if address is not locked.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"description": "Hash of created transaction that can be used to obtain information about created transaction.",
+				"schema": {
+					"title": "Hash",
+					"type": "string",
+					"pattern": "^[0-9,a-f,A-F]{64}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Send fund transfer transaction example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "receiver_address",
+							"value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+						},
+						{
+							"name": "amount",
+							"value": "569000"
+						},
+						{
+							"name": "sender_address_password",
+							"value": "pas123"
+						},
+						{
+							"name": "gas",
+							"value": "21000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "nonce",
+							"value": "7"
+						},
+						{
+							"name": "network_id",
+							"value": "1"
+						}
+					],
+					"result": {
+						"name": "Send fund transfer transaction example result",
+						"value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
+					}
+				}
+			]
+		},
+		{
+			"name": "account_sendDeployContractTransaction",
+			"description": "Sends data for creating a transaction if sender address private key is stored in keystore.The transaction used for deploying the contract.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to send.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "sender_address_password",
+					"required": true,
+					"description": "The password to unlock private key for sender address, empty if address is not locked.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "data",
+					"required": true,
+					"description": "Smart contract bytecode in hex format.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"description": "Hash of created transaction that can be used to obtain information about created transaction.",
+				"schema": {
+					"title": "Hash",
+					"type": "string",
+					"pattern": "^[0-9,a-f,A-F]{64}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Send deploy contract transaction example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "amount",
+							"value": "0"
+						},
+						{
+							"name": "sender_address_password",
+							"value": "pas123"
+						},
+						{
+							"name": "gas",
+							"value": "200000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "data",
+							"value": "6080604052341561000f57600080fd5b60b98061001d6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063b3de648b146044575b600080fd5b3415604e57600080fd5b606a600480360381019080803590602001909291905050506080565b6040518082815260200191505060405180910390f35b60006007820290509190505600a165627a7a72305820f294e834212334e2978c6dd090355312a3f0f9476b8eb98fb480406fc2728a960029"
+						},
+						{
+							"name": "nonce",
+							"value": "0"
+						},
+						{
+							"name": "network_id",
+							"value": "1"
+						}
+					],
+					"result": {
+						"name": "Send deploy contract transaction example result",
+						"value": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+					}
+				}
+			]
+		},
+		{
+			"name": "account_sendExecuteFunctionTransaction",
+			"description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction is used for executing contract functions.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "receiver_address",
+					"required": true,
+					"schema": {
+						"title": "Receiver address",
+						"type": "string",
+						"description": "The address that received this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to send.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "sender_address_password",
+					"required": true,
+					"description": "The password to unlock private key for sender address, empty if address is not locked.",
+					"schema": {
+						"type": "string"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "data",
+					"required": true,
+					"description": "Smart contract bytecode in hex format.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction hash",
+				"description": "Hash of created transaction that can be used to obtain information about created transaction.",
+				"schema": {
+					"title": "Hash",
+					"type": "string",
+					"pattern": "^[0-9,a-f,A-F]{64}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Send execute function transaction example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7"
+						},
+						{
+							"name": "receiver_address",
+							"value": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db"
+						},
+						{
+							"name": "amount",
+							"value": "100"
+						},
+						{
+							"name": "sender_address_password",
+							"value": "pas123"
+						},
+						{
+							"name": "gas",
+							"value": "210000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "data",
+							"value": "b3de648b00000000000000000000000000000000000000000000000000000001"
+						},
+						{
+							"name": "nonce",
+							"value": "0"
+						},
+						{
+							"name": "network_id",
+							"value": "1"
+						}
+					],
+					"result": {
+						"name": "Send execute function transaction example result",
+						"value": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getBlockCount",
+			"description": "Returns total number of block in blockchain.",
+			"params": [],
+			"result": {
+				"name": "Block count",
+				"description": "Total number of blocks in blockchain.",
+				"schema": {
+					"title": "Unsigned integer 64 bit",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 18446744073709552000
+				}
+			},
+			"examples": [
+				{
+					"name": "Get block count example",
+					"params": [],
+					"result": {
+						"name": "Get block count example result",
+						"value": 42
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getLatestBlock",
+			"description": "Retrieves latest block from the blockchain.",
+			"params": [],
+			"result": {
+				"name": "Latest block",
+				"description": "Last block in blockchain.",
+				"schema": {
+					"type": "object",
+					"title": "Transaction object",
+					"required": [
+						"block_index",
+						"block_hash",
+						"confirmation_timestamp",
+						"previous_block_hash",
+						"transaction_hashes"
+					],
+					"properties": {
+						"block_index": {
+							"title": "Block index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Unique sequential auto incremented block id."
+						},
+						"block_hash": {
+							"title": "Block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Blocks hash."
+						},
+						"confirmation_timestamp": {
+							"title": "Confirmation timestamp",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "The time when the block was confirmed."
+						},
+						"previous_block_hash": {
+							"title": "Previous block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Block hash for the previous block in blockchain attached to this block."
+						},
+						"transaction_hashes": {
+							"title": "Transaction hashes",
+							"description": "An array of transaction hashes contained in this block.",
+							"type": "array",
+							"items": {
+								"title": "Hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get latest block example",
+					"params": [],
+					"result": {
+						"name": "Get latest block example result",
+						"value": {
+							"block_index": 8,
+							"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+							"confirmation_timestamp": 1652192733280,
+							"previous_block_hash": "93811a9bdbb846eedfc8f698b141c4de499cfb3d5359a6a1f312c59b21e121c4",
+							"transaction_hashes": [
+								"5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+								"1c053382aedf362907ea42a6953c8d3684ec9abcb8769439222a4cd3219b678f",
+								"fc6c8864f19c47505b8f49702cf051953e06a07096860faa82718ae95ce69b55"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getBlockByHash",
+			"description": "Returns block by its hash.",
+			"params": [
+				{
+					"name": "block_hash",
+					"required": true,
+					"description": "Hash of the block.",
+					"schema": {
+						"title": "Hash",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]{64}$"
+					}
+				}
+			],
+			"result": {
+				"name": "Block by hash",
+				"description": "Block corresponding given hash.",
+				"schema": {
+					"type": "object",
+					"title": "Transaction object",
+					"required": [
+						"block_index",
+						"block_hash",
+						"confirmation_timestamp",
+						"previous_block_hash",
+						"transaction_hashes"
+					],
+					"properties": {
+						"block_index": {
+							"title": "Block index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Unique sequential auto incremented block id."
+						},
+						"block_hash": {
+							"title": "Block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Blocks hash."
+						},
+						"confirmation_timestamp": {
+							"title": "Confirmation timestamp",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "The time when the block was confirmed."
+						},
+						"previous_block_hash": {
+							"title": "Previous block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Block hash for the previous block in blockchain attached to this block."
+						},
+						"transaction_hashes": {
+							"title": "Transaction hashes",
+							"description": "An array of transaction hashes contained in this block.",
+							"type": "array",
+							"items": {
+								"title": "Hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get block by hash example",
+					"params": [
+						{
+							"name": "block_hash",
+							"value": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b"
+						}
+					],
+					"result": {
+						"name": "Get block by hash example result",
+						"value": {
+							"block_index": 8,
+							"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+							"confirmation_timestamp": 1652192733280,
+							"previous_block_hash": "93811a9bdbb846eedfc8f698b141c4de499cfb3d5359a6a1f312c59b21e121c4",
+							"transaction_hashes": [
+								"5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+								"1c053382aedf362907ea42a6953c8d3684ec9abcb8769439222a4cd3219b678f",
+								"fc6c8864f19c47505b8f49702cf051953e06a07096860faa82718ae95ce69b55"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getBlockByIndex",
+			"description": "Returns block by its index.",
+			"params": [
+				{
+					"name": "block_index",
+					"required": true,
+					"description": "Index of required block.",
+					"schema": {
+						"title": "Block index",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique sequential auto incremented block id."
+					}
+				}
+			],
+			"result": {
+				"name": "Get block by index",
+				"description": "Block corresponding given index.",
+				"schema": {
+					"type": "object",
+					"title": "Transaction object",
+					"required": [
+						"block_index",
+						"block_hash",
+						"confirmation_timestamp",
+						"previous_block_hash",
+						"transaction_hashes"
+					],
+					"properties": {
+						"block_index": {
+							"title": "Block index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Unique sequential auto incremented block id."
+						},
+						"block_hash": {
+							"title": "Block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Blocks hash."
+						},
+						"confirmation_timestamp": {
+							"title": "Confirmation timestamp",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "The time when the block was confirmed."
+						},
+						"previous_block_hash": {
+							"title": "Previous block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Block hash for the previous block in blockchain attached to this block."
+						},
+						"transaction_hashes": {
+							"title": "Transaction hashes",
+							"description": "An array of transaction hashes contained in this block.",
+							"type": "array",
+							"items": {
+								"title": "Hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get block by index example",
+					"params": [
+						{
+							"name": "block_index",
+							"value": 8
+						}
+					],
+					"result": {
+						"name": "Get block by index example result",
+						"value": {
+							"block_index": 8,
+							"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+							"confirmation_timestamp": 1652192733280,
+							"previous_block_hash": "93811a9bdbb846eedfc8f698b141c4de499cfb3d5359a6a1f312c59b21e121c4",
+							"transaction_hashes": [
+								"5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+								"1c053382aedf362907ea42a6953c8d3684ec9abcb8769439222a4cd3219b678f",
+								"fc6c8864f19c47505b8f49702cf051953e06a07096860faa82718ae95ce69b55"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getGasEstimate",
+			"description": "Executes given transaction and returns amount of used gas. After execution transaction is reverted.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "receiver_address",
+					"required": true,
+					"schema": {
+						"title": "Receiver address",
+						"type": "string",
+						"description": "The address that received this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to be sent.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "data",
+					"required": true,
+					"description": "Smart contract bytecode in hex format.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"description": "Transaction nonce.",
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Gas estimate",
+				"description": "Gas estimate.",
+				"schema": {
+					"title": "Atto Tolar",
+					"type": "string",
+					"pattern": "^([1-9][0-9]{0,77}|0)$",
+					"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+				}
+			},
+			"examples": [
+				{
+					"name": "Gas estimate example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "receiver_address",
+							"value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+						},
+						{
+							"name": "amount",
+							"value": "569000"
+						},
+						{
+							"name": "gas",
+							"value": "21000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "data",
+							"value": ""
+						},
+						{
+							"name": "nonce",
+							"value": "7"
+						},
+						{
+							"name": "network_id",
+							"value": "1"
+						}
+					],
+					"result": {
+						"name": "Gas estimate example result",
+						"value": "21000"
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_tryCallTransaction",
+			"description": "Executes read only contract functions on evm without spending gas or having any effect to address balance and nonce.",
+			"params": [
+				{
+					"name": "sender_address",
+					"required": true,
+					"schema": {
+						"title": "Sender address",
+						"type": "string",
+						"description": "The address that initiated this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "receiver_address",
+					"required": true,
+					"schema": {
+						"title": "Receiver address",
+						"type": "string",
+						"description": "The address that received this transaction.",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "amount",
+					"required": true,
+					"description": "Amount of atto tolars to be sent.",
+					"schema": {
+						"title": "Atto Tolar",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+					}
+				},
+				{
+					"name": "gas",
+					"required": true,
+					"schema": {
+						"title": "Gas",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+					}
+				},
+				{
+					"name": "gas_price",
+					"required": true,
+					"schema": {
+						"title": "Gas price",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+					}
+				},
+				{
+					"name": "data",
+					"required": true,
+					"description": "Smart contract bytecode in hex format.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				},
+				{
+					"name": "nonce",
+					"required": true,
+					"description": "Transaction nonce.",
+					"schema": {
+						"title": "Nonce",
+						"type": "string",
+						"pattern": "^([1-9][0-9]{0,77}|0)$",
+						"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+					}
+				},
+				{
+					"name": "network_id",
+					"required": true,
+					"description": "Transaction nonce.",
+					"schema": {
+						"title": "Network id",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...)."
+					}
+				}
+			],
+			"result": {
+				"name": "Try call output",
+				"schema": {
+					"type": "object",
+					"title": "Try call output",
+					"required": [
+						"output",
+						"excepted"
+					],
+					"properties": {
+						"output": {
+							"title": "Output",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]*$",
+							"description": "The returned data of the call, e.g. a smart contract functions return value."
+						},
+						"excepted": {
+							"title": "Excepted",
+							"description": "True if exception happened, false if transaction execution was successful.",
+							"type": "boolean"
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Try call transaction example",
+					"params": [
+						{
+							"name": "sender_address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "receiver_address",
+							"value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+						},
+						{
+							"name": "amount",
+							"value": "569000"
+						},
+						{
+							"name": "gas",
+							"value": "21000"
+						},
+						{
+							"name": "gas_price",
+							"value": "1"
+						},
+						{
+							"name": "data",
+							"value": "cfae3217c5b262aa"
+						},
+						{
+							"name": "nonce",
+							"value": "7"
+						},
+						{
+							"name": "network_id",
+							"value": 1
+						}
+					],
+					"result": {
+						"name": "Try call transaction example result",
+						"value": {
+							"output": "31ab5678",
+							"excepted": true
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getBalance",
+			"description": "Get balance for selected address on the specified block in the blockchain.",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Address for which balance is needed.",
+					"schema": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "block_index",
+					"required": true,
+					"description": "Index of block for which balance is required.",
+					"schema": {
+						"title": "Block index",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000,
+						"description": "Unique sequential auto incremented block id."
+					}
+				}
+			],
+			"result": {
+				"name": "Balance",
+				"description": "Balance for given address at block with specified index.",
+				"schema": {
+					"title": "Atto Tolar",
+					"type": "string",
+					"pattern": "^([1-9][0-9]{0,77}|0)$",
+					"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+				}
+			},
+			"examples": [
+				{
+					"name": "Get balance example",
+					"params": [
+						{
+							"name": "address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "block_index",
+							"value": 48
+						}
+					],
+					"result": {
+						"name": "Get balance example result",
+						"description": "Required address have 1 Tolar = 1000000000000000000 attoTolar",
+						"value": "1000000000000000000"
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getLatestBalance",
+			"description": "Returns current balance for given address on last block in blockchain.",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Address for which balance is needed.",
+					"schema": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				}
+			],
+			"result": {
+				"name": "Get latest balance",
+				"description": "Latest balance for given address.",
+				"schema": {
+					"title": "Atto Tolar",
+					"type": "string",
+					"pattern": "^([1-9][0-9]{0,77}|0)$",
+					"description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol"
+				}
+			},
+			"examples": [
+				{
+					"name": "Latest balance example",
+					"params": [
+						{
+							"name": "address",
+							"value": "546399121770646811e854d5393e0236e24721b80325050e12"
+						}
+					],
+					"result": {
+						"name": "Get latest balance example result",
+						"description": "Required address have 1 Tolar = 1000000000000000000 attoTolar",
+						"value": "1000000000000000000"
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getNonce",
+			"description": "Returns next available nonce value for given address.",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Address for which next nonce is needed.",
+					"schema": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				}
+			],
+			"result": {
+				"name": "Next nonce",
+				"description": "Next nonce for given address.",
+				"schema": {
+					"title": "Nonce",
+					"type": "string",
+					"pattern": "^([1-9][0-9]{0,77}|0)$",
+					"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+				}
+			},
+			"examples": [
+				{
+					"name": "Get nonce example",
+					"params": [
+						{
+							"name": "address",
+							"value": "546399121770646811e854d5393e0236e24721b80325050e12"
+						}
+					],
+					"result": {
+						"name": "Get nonce example result",
+						"value": "2"
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getBlockchainInfo",
+			"description": "Retrieves blockchain statistics information.",
+			"params": [],
+			"result": {
+				"name": "Blockchain info",
+				"description": "Provides basic information about blockchain.",
+				"schema": {
+					"type": "object",
+					"title": "Blockchain info",
+					"required": [
+						"confirmed_blocks_count",
+						"total_blocks_count",
+						"last_confirmed_block_hash"
+					],
+					"properties": {
+						"confirmed_blocks_count": {
+							"title": "Confirmed blocks count",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Total number of blocks in the current blockchain."
+						},
+						"total_blocks_count": {
+							"title": "Total blocks count",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Total number of blocks in the current blockchain."
+						},
+						"last_confirmed_block_hash": {
+							"title": "Total blocks count",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Hash of latest block in blockchain."
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get blockchain info example",
+					"params": [],
+					"result": {
+						"name": "Get blockchain info example result",
+						"value": {
+							"confirmed_blocks_count": 100,
+							"total_blocks_count": 100,
+							"last_confirmed_block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getTransaction",
+			"description": "Retrieves confirmed transaction information from the current node blockchain.",
+			"params": [
+				{
+					"name": "transaction_hash",
+					"required": true,
+					"description": "The hash for the requested transaction.",
+					"schema": {
+						"title": "Hash",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]{64}$"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction",
+				"description": "Requested transaction.",
+				"schema": {
+					"type": "object",
+					"title": "Transaction response",
+					"required": [
+						"transaction_hash",
+						"block_hash",
+						"transaction_index",
+						"sender_address",
+						"receiver_address",
+						"value",
+						"gas",
+						"gas_price",
+						"data",
+						"nonce",
+						"network_id",
+						"confirmation_timestamp",
+						"gas_used",
+						"gas_refunded",
+						"new_address",
+						"output",
+						"excepted",
+						"exception"
+					],
+					"properties": {
+						"transaction_hash": {
+							"title": "Transaction hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$"
+						},
+						"block_hash": {
+							"title": "Block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Hash of block where this transaction is found."
+						},
+						"transaction_index": {
+							"title": "Transaction index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Index of transaction inside a block."
+						},
+						"sender_address": {
+							"title": "Sender address",
+							"type": "string",
+							"description": "The address that initiated this transaction.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"receiver_address": {
+							"title": "Receiver address",
+							"type": "string",
+							"description": "The address that received this transaction.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"value": {
+							"title": "Value",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "Amount sent in the transaction."
+						},
+						"gas": {
+							"title": "Gas",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+						},
+						"gas_price": {
+							"title": "Gas price",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+						},
+						"data": {
+							"title": "Data",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]*$",
+							"description": "Smart contract bytecode. Not in hex format, transform hex bytecode to bytes."
+						},
+						"nonce": {
+							"title": "Nonce",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+						},
+						"network_id": {
+							"title": "Nonce",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+						},
+						"confirmation_timestamp": {
+							"title": "Confirmation timestamp",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "The time when the block was confirmed."
+						},
+						"gas_used": {
+							"title": "Gas used",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "The gas amount used executing transaction."
+						},
+						"gas_refunded": {
+							"title": "Gas refunded",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "The amount that is refunded in special cases."
+						},
+						"new_address": {
+							"title": "New address",
+							"type": "string",
+							"description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"output": {
+							"title": "Output",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]*$",
+							"description": "The returned data of the call, e.g. a smart contract functions return value."
+						},
+						"excepted": {
+							"title": "Excepted",
+							"description": "True if an exception happened, false if transaction execution was successful.",
+							"type": "boolean"
+						},
+						"exception": {
+							"title": "Exception",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 4294967295,
+							"description": "Evm exception code."
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get transaction example",
+					"params": [
+						{
+							"name": "transaction_hash",
+							"value": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1"
+						}
+					],
+					"result": {
+						"name": "Get transaction example result",
+						"value": {
+							"transaction_hash": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+							"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+							"transaction_index": 1,
+							"sender_address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+							"receiver_address": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab",
+							"value": "569000",
+							"gas": "21000",
+							"gas_price": "1",
+							"data": "",
+							"nonce": "7",
+							"network_id": 1,
+							"confirmation_timestamp": 1652192733280,
+							"gas_used": "21000",
+							"gas_refunded": "0",
+							"new_address": "",
+							"output": "",
+							"excepted": false,
+							"exception": 0
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getTransactionList",
+			"description": "Retrieves most recent transaction list based on transaction limit and how many transactions to skip.",
+			"params": [
+				{
+					"name": "addresses",
+					"required": true,
+					"description": "List of all addresses by which transaction should be filtered (leave empty to apply no filter and return all transactions).",
+					"schema": {
+						"type": "array",
+						"items": {
+							"title": "Hex encoded address",
+							"type": "string",
+							"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						}
+					}
+				},
+				{
+					"name": "limit",
+					"required": true,
+					"description": "Maximum number of transactions to return in one batch (no more than 1000).",
+					"schema": {
+						"title": "Unsigned integer 64 bit",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000
+					}
+				},
+				{
+					"name": "skip",
+					"required": true,
+					"description": "Number of most recent transactions to skip starting from blockchain’s last confirmed block.",
+					"schema": {
+						"title": "Unsigned integer 64 bit",
+						"type": "number",
+						"minimum": 0,
+						"maximum": 18446744073709552000
+					}
+				}
+			],
+			"result": {
+				"name": "Transactions",
+				"description": "Requested transactions.",
+				"schema": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"title": "Transaction response",
+						"required": [
+							"transaction_hash",
+							"block_hash",
+							"transaction_index",
+							"sender_address",
+							"receiver_address",
+							"value",
+							"gas",
+							"gas_price",
+							"data",
+							"nonce",
+							"network_id",
+							"confirmation_timestamp",
+							"gas_used",
+							"gas_refunded",
+							"new_address",
+							"output",
+							"excepted",
+							"exception"
+						],
+						"properties": {
+							"transaction_hash": {
+								"title": "Transaction hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"block_hash": {
+								"title": "Block hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$",
+								"description": "Hash of block where this transaction is found."
+							},
+							"transaction_index": {
+								"title": "Transaction index",
+								"type": "number",
+								"minimum": 0,
+								"maximum": 18446744073709552000,
+								"description": "Index of transaction inside a block."
+							},
+							"sender_address": {
+								"title": "Sender address",
+								"type": "string",
+								"description": "The address that initiated this transaction.",
+								"pattern": "^54[0-9,a-f,A-F]{48}$"
+							},
+							"receiver_address": {
+								"title": "Receiver address",
+								"type": "string",
+								"description": "The address that received this transaction.",
+								"pattern": "^54[0-9,a-f,A-F]{48}$"
+							},
+							"value": {
+								"title": "Value",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Amount sent in the transaction."
+							},
+							"gas": {
+								"title": "Gas",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+							},
+							"gas_price": {
+								"title": "Gas price",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+							},
+							"data": {
+								"title": "Data",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]*$",
+								"description": "Smart contract bytecode. Not in hex format, transform hex bytecode to bytes."
+							},
+							"nonce": {
+								"title": "Nonce",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+							},
+							"network_id": {
+								"title": "Nonce",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+							},
+							"confirmation_timestamp": {
+								"title": "Confirmation timestamp",
+								"type": "number",
+								"minimum": 0,
+								"maximum": 18446744073709552000,
+								"description": "The time when the block was confirmed."
+							},
+							"gas_used": {
+								"title": "Gas used",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "The gas amount used executing transaction."
+							},
+							"gas_refunded": {
+								"title": "Gas refunded",
+								"type": "string",
+								"pattern": "^([1-9][0-9]{0,77}|0)$",
+								"description": "The amount that is refunded in special cases."
+							},
+							"new_address": {
+								"title": "New address",
+								"type": "string",
+								"description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+								"pattern": "^54[0-9,a-f,A-F]{48}$"
+							},
+							"output": {
+								"title": "Output",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]*$",
+								"description": "The returned data of the call, e.g. a smart contract functions return value."
+							},
+							"excepted": {
+								"title": "Excepted",
+								"description": "True if an exception happened, false if transaction execution was successful.",
+								"type": "boolean"
+							},
+							"exception": {
+								"title": "Exception",
+								"type": "number",
+								"minimum": 0,
+								"maximum": 4294967295,
+								"description": "Evm exception code."
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get transaction list example",
+					"params": [
+						{
+							"name": "addresses",
+							"value": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642"
+						},
+						{
+							"name": "limit",
+							"value": 2
+						},
+						{
+							"name": "skip",
+							"value": 0
+						}
+					],
+					"result": {
+						"name": "Get transaction list example result",
+						"value": [
+							{
+								"transaction_hash": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+								"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+								"transaction_index": 1,
+								"sender_address": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642",
+								"receiver_address": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab",
+								"value": "569000",
+								"gas": "21000",
+								"gas_price": "1",
+								"data": "",
+								"nonce": "7",
+								"network_id": 1,
+								"confirmation_timestamp": 1652192733280,
+								"gas_used": "21000",
+								"gas_refunded": "0",
+								"new_address": "",
+								"output": "",
+								"excepted": false,
+								"exception": 0
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getPastEvents",
+			"description": "Returns emitted events by the contract.",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Address of the contract.",
+					"schema": {
+						"title": "Hex encoded address",
+						"type": "string",
+						"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+						"pattern": "^54[0-9,a-f,A-F]{48}$"
+					}
+				},
+				{
+					"name": "topic",
+					"required": true,
+					"description": "Keccak256 of the event name and arguments.",
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				}
+			],
+			"result": {
+				"name": "Past events",
+				"description": "Contracts emitted events.",
+				"schema": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"title": "Past event response",
+						"required": [
+							"address",
+							"topic",
+							"block_hash",
+							"block_index"
+						],
+						"properties": {
+							"address": {
+								"title": "Address",
+								"type": "string",
+								"description": "Address of the contract.",
+								"pattern": "^54[0-9,a-f,A-F]{48}$"
+							},
+							"topic": {
+								"title": "Topic",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]*$",
+								"description": "Keccak256 of the event name and arguments."
+							},
+							"topic_arg_0": {
+								"title": "Topic arg0",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"topic_arg_1": {
+								"title": "Topic arg1",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"topic_arg_2": {
+								"title": "Topic arg2",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"data": {
+								"title": "Data",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]*$"
+							},
+							"transaction_hash": {
+								"title": "Transaction hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"block_hash": {
+								"title": "Block hash",
+								"type": "string",
+								"pattern": "^[0-9,a-f,A-F]{64}$"
+							},
+							"block_index": {
+								"title": "Block index",
+								"type": "number",
+								"minimum": 0,
+								"maximum": 18446744073709552000,
+								"description": "Unique sequential auto incremented block id."
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get past events example",
+					"params": [
+						{
+							"name": "address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "topic",
+							"value": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928"
+						}
+					],
+					"result": {
+						"name": "Get past events example result",
+						"value": [
+							{
+								"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+								"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+								"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+								"topic_arg_1": "0000000000000000000000000000000000000000000000000000000000000000",
+								"topic_arg_2": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aaa",
+								"data": "74686973206973206669727374206c617374206576656e74",
+								"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d03414643dd",
+								"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+								"block_index": 12345
+							},
+							{
+								"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+								"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+								"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+								"topic_arg_1": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aa6",
+								"data": "74686973206973207365636f6e64206c617374206576656e74",
+								"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d0341464333",
+								"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+								"block_index": 12345
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getTransactionReceipt",
+			"description": "Retrieves transaction receipt information from the blockchain.",
+			"params": [
+				{
+					"name": "transaction_hash",
+					"required": true,
+					"description": "The hash for requested transaction receipt.",
+					"schema": {
+						"title": "Hash",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]{64}$"
+					}
+				}
+			],
+			"result": {
+				"name": "Transaction receipt",
+				"schema": {
+					"type": "object",
+					"required": [
+						"excepted",
+						"block_hash",
+						"block_index",
+						"transaction_hash",
+						"transaction_index",
+						"sender_address",
+						"receiver_address",
+						"new_address",
+						"gas_used",
+						"logs",
+						"exception"
+					],
+					"properties": {
+						"excepted": {
+							"title": "Excepted",
+							"description": "False if transaction execution was successful, true if the EVM reverted the transaction.",
+							"type": "boolean"
+						},
+						"block_hash": {
+							"title": "Block hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Block hash where this transaction is found."
+						},
+						"block_index": {
+							"title": "Block index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Block index where this transaction is found."
+						},
+						"transaction_hash": {
+							"title": "Transaction hash",
+							"type": "string",
+							"pattern": "^[0-9,a-f,A-F]{64}$",
+							"description": "Transaction hash."
+						},
+						"transaction_index": {
+							"title": "Transaction index",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 18446744073709552000,
+							"description": "Index of transaction inside a block."
+						},
+						"sender_address": {
+							"title": "Sender address",
+							"type": "string",
+							"description": "The address that initiated this transaction.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"receiver_address": {
+							"title": "Receiver address",
+							"type": "string",
+							"description": "The address that received this transaction.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"new_address": {
+							"title": "New address",
+							"type": "string",
+							"description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+							"pattern": "^54[0-9,a-f,A-F]{48}$"
+						},
+						"gas_used": {
+							"title": "Gas used",
+							"type": "string",
+							"pattern": "^([1-9][0-9]{0,77}|0)$",
+							"description": "The gas amount used executing transaction."
+						},
+						"logs": {
+							"title": "Logs",
+							"description": "An array of log objects which transaction generated.",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"title": "Log entry response",
+								"required": [],
+								"properties": {
+									"address": {
+										"title": "Address",
+										"type": "string",
+										"description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
+										"pattern": "^54[0-9,a-f,A-F]{48}$"
+									},
+									"topics": {
+										"title": "Topics",
+										"description": "Index names/arguments used for indexable search.",
+										"type": "array",
+										"items": {
+											"title": "Hash",
+											"type": "string",
+											"pattern": "^[0-9,a-f,A-F]{64}$"
+										}
+									},
+									"data": {
+										"title": "Data",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]*$",
+										"description": "Log data."
+									}
+								}
+							}
+						},
+						"exception": {
+							"title": "Excepted",
+							"description": "True if an exception happened, false if transaction execution was successful.",
+							"type": "boolean"
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get transaction receipt example",
+					"params": [
+						{
+							"name": "transaction_hash",
+							"value": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1"
+						}
+					],
+					"result": {
+						"name": "Get transaction receipt example result",
+						"value": {
+							"excepted": false,
+							"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+							"block_index": 23,
+							"transaction_hash": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+							"transaction_index": 1,
+							"sender_address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+							"receiver_address": "5456a09d5c06e23ec6a71a7db606549ec4bde1788c71a9552b",
+							"new_address": "54000000000000000000000000000000000000000023199e2b",
+							"gas_used": "21000",
+							"logs": [
+								{
+									"address": "5456a09d5c06e23ec6a71a7db606549ec4bde1788c71a9552b",
+									"topics": [
+										"324591e46c0cd422e42a223fbdaf9117beefd35b5f20a2b908afff711bd55bee",
+										"00000000000000000000000012c347d6570bcdde3a89fca489f679b8b0ca22a5",
+										"0000000000000000000000000000000000000000000000000000000000000008"
+									],
+									"data": "000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000056578747261000000000000000000000000000000000000000000000000000000"
+								}
+							],
+							"exception": 0
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "net_peerCount",
+			"description": "Get current peer count in running HashNet network.",
+			"params": [],
+			"result": {
+				"name": "Peer count",
+				"schema": {
+					"title": "Unsigned integer 64 bit",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 18446744073709552000
+				}
+			},
+			"examples": [
+				{
+					"name": "Peer count example",
+					"params": [],
+					"result": {
+						"name": "Peer count example result",
+						"value": 8
+					}
+				}
+			]
+		},
+		{
+			"name": "net_masterNodeCount",
+			"description": "Get current master nodes count in running HashNet network.",
+			"params": [],
+			"result": {
+				"name": "Master node count",
+				"schema": {
+					"title": "Unsigned integer 64 bit",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 18446744073709552000
+				}
+			},
+			"examples": [
+				{
+					"name": "Master node count example",
+					"params": [],
+					"result": {
+						"name": "Master node count example result",
+						"value": 8
+					}
+				}
+			]
+		},
+		{
+			"name": "net_isMasterNode",
+			"description": "Check if this service is tolar HashNet master node.",
+			"params": [],
+			"result": {
+				"name": "Is master node",
+				"schema": {
+					"type": "boolean"
+				}
+			},
+			"examples": [
+				{
+					"name": "Is master node example",
+					"params": [],
+					"result": {
+						"name": "Is master node example result",
+						"value": false
+					}
+				}
+			]
+		},
+		{
+			"name": "tx_sendSignedTransaction",
+			"description": "Send signed transaction.",
+			"params": [
+				{
+					"name": "signed_transaction",
+					"required": true,
+					"schema": {
+						"title": "Hex encoded bytes",
+						"type": "string",
+						"pattern": "^[0-9,a-f,A-F]*$"
+					}
+				}
+			],
+			"result": {
+				"name": "Hash",
+				"description": "Hash of created transaction that can be used to obtain information about created transaction.",
+				"schema": {
+					"title": "Hash",
+					"type": "string",
+					"pattern": "^[0-9,a-f,A-F]{64}$"
+				}
+			},
+			"examples": [
+				{
+					"name": "Send signed transaction example",
+					"params": [
+						{
+							"name": "SendSignedTxExampleParam",
+							"value": "0a7f0a323534313235316236613766396337626439613739353266336466323532623164633462373063353464386233306430616430123235346634366436313839373335616466343266363730383864336633626238336137333639633934363265663966346230331a012a22030186a02a01013201013a010040eaadc0e52412ca020a4033376232363961376632663831326261326134373961346437393162306465643162313437383031316661333063623535313364666536306637643334306436128201383235383661653739306334656435366534356635343736316365346434636463633237623462623664333931333733653365396366333766333164326562653230383763303366363265333065623437393064343337643436633134663136343437656262616462613964333764336537323937663332303637303162643430301a80013438633138376530643362613531343531626432323465383561633134326137656638626662386161356663343334303761363164353535336562363263363838353131316537653162396234326365663166373438383532303330613734363230623565616233343432373664336230373863626335356264386238306263"
+						}
+					],
+					"result": {
+						"name": "Send signed transaction example result",
+						"value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
+					}
+				}
+			]
+		}
+	],
+	"components": {}
+}

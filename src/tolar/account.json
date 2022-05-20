@@ -1,0 +1,1048 @@
+[
+  {
+    "name": "account_create",
+    "description": "Creates new keystore.",
+    "params": [
+      {
+        "name": "master_password",
+        "description": "Locks entire keystore with this password if provided, if empty, keystore will not be locked.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "mnemonic",
+        "description": "12 words mnemonic used to initialize BIP39 deterministic key generation. If empty string is sent random mnemonic is generated.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Is account created",
+      "description": "True if account was successfully created, else false.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Create account example",
+        "description": "Creates keystore without master password.",
+        "params": [
+          {
+            "name": "master_password",
+            "value": ""
+          },
+          {
+            "name": "mnemonic",
+            "value": "siege van edit river asset always material powder swallow glad helmet wait"
+          }
+        ],
+        "result": {
+          "name": "Create account example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_open",
+    "description": "Opens existing keystore.",
+    "params": [
+      {
+        "name": "master_password",
+        "description": "Unlocks keystore with this password if keystore was originally locked with the provided password.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Is account opened",
+      "description": "True if account was successfully created, else false.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Create account example",
+        "description": "Creates keystore without master password.",
+        "params": [
+          {
+            "name": "master_password",
+            "value": ""
+          },
+          {
+            "name": "mnemonic",
+            "value": "siege van edit river asset always material powder swallow glad helmet wait"
+          }
+        ],
+        "result": {
+          "name": "Create account example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_listAddresses",
+    "description": "List all addresses in keystore attached to master or thin node.",
+    "params": [
+    ],
+    "result": {
+      "name": "Listed addresses",
+      "description": "All addresses in keystore.",
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/address"
+        }
+      }
+    },
+    "examples": [
+      {
+        "name": "List addresses example",
+        "description": "Lists all addresses in keystore.",
+        "params": [
+        ],
+        "result": {
+          "name": "List addresses example result",
+          "value": [
+            "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642",
+            "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_verifyAddress",
+    "description": "Verifies if provided address string is in valid Tolar address format.",
+    "params": [
+      {
+        "name": "address",
+        "description": "Address in hex string format.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      }
+    ],
+    "result": {
+      "name": "Is address valid",
+      "description": "True if address is in valid tolar format, else false.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Verify address example",
+        "description": "Checks invalid address and fails.",
+        "params": [
+          {
+            "name": "address",
+            "value": "abcdef123456"
+          }
+        ],
+        "result": {
+          "name": "Verify address example result",
+          "value": false
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_createNewAddress",
+    "description": "Creates new address in keystore.",
+    "params": [
+      {
+        "name": "name",
+        "required": true,
+        "description": "Address description name.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_password",
+        "required": true,
+        "description": "Password to protect generate keypair for newly created address.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_hint",
+        "required": true,
+        "description": "Optional password hint for the selected password.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Created address",
+      "description": "Newly created address.",
+      "schema": {
+        "$ref": "#/components/schemas/address"
+      }
+    },
+    "examples": [
+      {
+        "name": "Create new address example",
+        "params": [
+          {
+            "name": "name",
+            "value": "example address"
+          },
+          {
+            "name": "lock_password",
+            "value": "pass123"
+          },
+          {
+            "name": "lock_hint",
+            "value": ""
+          }
+        ],
+        "result": {
+          "name": "Create new address example result",
+          "value": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7"
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_exportKeyFile",
+    "description": "Exports key file for selected address from keystore.",
+    "params": [
+      {
+        "name": "address",
+        "required": true,
+        "description": "Selected address for which export keypair information is required.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Exported key file",
+      "description": "If successful, return key file in encrypted json format.",
+      "schema": {
+        "type": "string"
+      }
+    },
+    "examples": [
+      {
+        "name": "Export key file example",
+        "description": "Exports key file in encrypted json format for given address.",
+        "params": [
+          {
+            "name": "address",
+            "value": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642"
+          }
+        ],
+        "result": {
+          "name": "Export key file example result",
+          "value": "{\n   \"address\":\"f9f02416d894487e7bbd9d74065f7996cbdbf52b\",\n   \"crypto\":{\n      \"cipher\":\"aes-128-ctr\",\n      \"cipherparams\":{\n         \"iv\":\"28fe2f484412dcdc1e2c56544e511d1c\"\n      },\n      \"ciphertext\":\"db10f6e015eb7d744a8de7a2ab2a97f4542c60cb48b846d441ae4add00b8a469\",\n      \"kdf\":\"scrypt\",\n      \"kdfparams\":{\n         \"dklen\":32,\n         \"n\":262144,\n         \"p\":1,\n         \"r\":8,\n         \"salt\":\"68caf683e20ae150d7f2150c25426caf178c2f2ee9082cfa784239838ae64b68\"\n      },\n      \"mac\":\"86006944babe7d7d80c08c29cd3defc7aebe1fd9bdc9d3aee2cb8f6382982d6e\"\n   },\n   \"id\":\"32addc9f-8942-93e9-f109-f6fa8776fdf1\",\n   \"version\":3\n}"
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_importKeyFile",
+    "description": "Imports key file to keystore.",
+    "params": [
+      {
+        "name": "json_key_file",
+        "required": true,
+        "description": "Key file in encrypted JSON format.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "name",
+        "required": true,
+        "description": "Name for imported address.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_password",
+        "required": true,
+        "description": "Lock password if original key file was password protected.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_hint",
+        "required": true,
+        "description": "Optional lock hint for lock password.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Imported key file status",
+      "description": "Returns true if import succeeded, else false.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Import key file example",
+        "description": "Successfully imports key file.",
+        "params": [
+          {
+            "name": "json_key_file",
+            "value": "{\n   \"address\":\"f9f02416d894487e7bbd9d74065f7996cbdbf52b\",\n   \"crypto\":{\n      \"cipher\":\"aes-128-ctr\",\n      \"cipherparams\":{\n         \"iv\":\"28fe2f484412dcdc1e2c56544e511d1c\"\n      },\n      \"ciphertext\":\"db10f6e015eb7d744a8de7a2ab2a97f4542c60cb48b846d441ae4add00b8a469\",\n      \"kdf\":\"scrypt\",\n      \"kdfparams\":{\n         \"dklen\":32,\n         \"n\":262144,\n         \"p\":1,\n         \"r\":8,\n         \"salt\":\"68caf683e20ae150d7f2150c25426caf178c2f2ee9082cfa784239838ae64b68\"\n      },\n      \"mac\":\"86006944babe7d7d80c08c29cd3defc7aebe1fd9bdc9d3aee2cb8f6382982d6e\"\n   },\n   \"id\":\"32addc9f-8942-93e9-f109-f6fa8776fdf1\",\n   \"version\":3\n}"
+          },
+          {
+            "name": "name",
+            "value": "Imported Test Address"
+          },
+          {
+            "name": "lock_password",
+            "value": "pas123"
+          }
+        ],
+        "result": {
+          "name": "Import key file example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_importRawPrivateKey",
+    "description": "Imports raw private key to keystore.",
+    "params": [
+      {
+        "name": "raw_private_key",
+        "required": true,
+        "description": "Raw private key, should be 64 hex chars long",
+        "schema": {
+          "type": "string",
+          "pattern": "^[0-9,a-f,A-F]{64}$"
+        }
+      },
+      {
+        "name": "name",
+        "required": true,
+        "description": "Name for imported address.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_password",
+        "required": true,
+        "description": "Lock password if original key file was password protected.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "lock_hint",
+        "required": true,
+        "description": "Optional lock hint for lock password.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Imported raw private key status",
+      "description": "Returns true if import succeeded, else false.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Import raw private key example",
+        "description": "Successfully imports raw private key.",
+        "params": [
+          {
+            "name": "raw_private_key",
+            "value": "59186b6c7363dce5cf4fb46f8fb3668d5dabb038c126d80ade61523491a86334"
+          },
+          {
+            "name": "name",
+            "value": "Imported Test Address"
+          },
+          {
+            "name": "lock_password",
+            "value": "pas123"
+          },
+          {
+            "name": "lock_hint",
+            "value": "default pass"
+          }
+        ],
+        "result": {
+          "name": "Import raw private key example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_listBalancePerAddress",
+    "description": "List all addresses stored in keystore with their associated name and current balance status.",
+    "params": [
+    ],
+    "result": {
+      "name": "Balance per addresses",
+      "description": "Array of addresses paired with their name and balance.",
+      "schema": {
+        "type": "array",
+        "items": {
+          "title": "Balance per address",
+          "type": "object",
+          "required": [
+            "address",
+            "balance"
+          ],
+          "properties": {
+            "address": {
+              "title": "Address",
+              "$ref": "#/components/schemas/address"
+            },
+            "balance": {
+              "title": "Balance",
+              "$ref": "#/components/schemas/atto_tolar"
+            },
+            "name": {
+              "title": "name",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "examples": [
+      {
+        "name": "List balance per address example",
+        "description": "Lists all addresses in keystore with its balances.",
+        "params": [],
+        "result": {
+          "name": "List balance per address example result",
+          "value": [
+            {
+              "address": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7",
+              "name": "",
+              "balance": "1570000000"
+            },
+            {
+              "address": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db",
+              "name": "CustomAddress",
+              "balance": "12400000000000"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_changePassword",
+    "description": "Changes master password used to lock entire keystore.",
+    "params": [
+      {
+        "name": "old_master_password",
+        "description": "The current master password used to lock keystore.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "new_master_password",
+        "description": "The new master password that will replace the current one.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Is password changed",
+      "description": "True if password change was successful, false otherwise.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Change password example",
+        "description": "Changes existing password successfully.",
+        "params": [
+          {
+            "name": "old_master_password",
+            "value": "old_pass"
+          },
+          {
+            "name": "new_master_password",
+            "value": "new_pass"
+          }
+        ],
+        "result": {
+          "name": "Change password example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_changeAddressPassword",
+    "description": "Changes lock password for the single address used to lock its private key in keystore.",
+    "params": [
+      {
+        "name": "address",
+        "description": "Address for which password changing is required.",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/address"
+        }
+      },
+      {
+        "name": "old_password",
+        "description": "Current address password.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "new_password",
+        "description": "New address password that will replace the current one.",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "result": {
+      "name": "Is address password changed",
+      "description": "True if address password change was successful, false otherwise.",
+      "schema": {
+        "type": "boolean"
+      }
+    },
+    "examples": [
+      {
+        "name": "Change address password example",
+        "description": "Changes existing password for address.",
+        "params": [
+          {
+            "name": "address",
+            "value": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db"
+          },
+          {
+            "name": "old_password",
+            "value": "old_pass123"
+          },
+          {
+            "name": "new_password",
+            "value": "new_pass456"
+          }
+        ],
+        "result": {
+          "name": "Change address password example result",
+          "value": true
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_sendRawTransaction",
+    "description": "Creates transaction from data given in request parameters. Verify and sign the transaction using keystore and then sends the transaction to the master node where it will be executed.",
+    "params": [
+      {
+        "name": "sender_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/sender_address"
+        }
+      },
+      {
+        "name": "receiver_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/receiver_address"
+        }
+      },
+      {
+        "name": "amount",
+        "required": true,
+        "description": "Amount of atto tolars to send.",
+        "schema": {
+          "$ref": "#/components/schemas/atto_tolar"
+        }
+      },
+      {
+        "name": "sender_address_password",
+        "required": true,
+        "description": "The password to unlock private key for sender address, empty if address is not locked.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gas",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas"
+        }
+      },
+      {
+        "name": "gas_price",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas_price"
+        }
+      },
+      {
+        "name": "data",
+        "required": true,
+        "description": "Smart contract bytecode in hex format.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      },
+      {
+        "name": "nonce",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/nonce"
+        }
+      },
+      {
+        "name": "network_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/network_id"
+        }
+      }
+    ],
+    "result": {
+      "name": "Transaction hash",
+      "description": "Hash of created transaction that can be used to obtain information about created transaction.",
+      "schema": {
+        "$ref": "#/components/schemas/hash"
+      }
+    },
+    "examples": [
+      {
+        "name": "Send raw transaction example",
+        "params": [
+          {
+            "name": "sender_address",
+            "value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+          },
+          {
+            "name": "receiver_address",
+            "value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+          },
+          {
+            "name": "amount",
+            "value": "569000"
+          },
+          {
+            "name": "sender_address_password",
+            "value": "pas123"
+          },
+          {
+            "name": "gas",
+            "value": "21000"
+          },
+          {
+            "name": "gas_price",
+            "value": "1"
+          },
+          {
+            "name": "data",
+            "value": ""
+          },
+          {
+            "name": "nonce",
+            "value": "7"
+          },
+          {
+            "name": "network_id",
+            "value": "1"
+          }
+        ],
+        "result": {
+          "name": "Send raw transaction example result",
+          "value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_sendFundTransferTransaction",
+    "description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction used for transferring funds from the sender to the receiver address.",
+    "params": [
+      {
+        "name": "sender_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/sender_address"
+        }
+      },
+      {
+        "name": "receiver_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/receiver_address"
+        }
+      },
+      {
+        "name": "amount",
+        "required": true,
+        "description": "Amount of atto tolars to send.",
+        "schema": {
+          "$ref": "#/components/schemas/atto_tolar"
+        }
+      },
+      {
+        "name": "sender_address_password",
+        "required": true,
+        "description": "The password to unlock private key for sender address, empty if address is not locked.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gas",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas"
+        }
+      },
+      {
+        "name": "gas_price",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas_price"
+        }
+      },
+      {
+        "name": "nonce",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/nonce"
+        }
+      },
+      {
+        "name": "network_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/network_id"
+        }
+      }
+    ],
+    "result": {
+      "name": "Transaction hash",
+      "description": "Hash of created transaction that can be used to obtain information about created transaction.",
+      "schema": {
+        "$ref": "#/components/schemas/hash"
+      }
+    },
+    "examples": [
+      {
+        "name": "Send fund transfer transaction example",
+        "params": [
+          {
+            "name": "sender_address",
+            "value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+          },
+          {
+            "name": "receiver_address",
+            "value": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab"
+          },
+          {
+            "name": "amount",
+            "value": "569000"
+          },
+          {
+            "name": "sender_address_password",
+            "value": "pas123"
+          },
+          {
+            "name": "gas",
+            "value": "21000"
+          },
+          {
+            "name": "gas_price",
+            "value": "1"
+          },
+          {
+            "name": "nonce",
+            "value": "7"
+          },
+          {
+            "name": "network_id",
+            "value": "1"
+          }
+        ],
+        "result": {
+          "name": "Send fund transfer transaction example result",
+          "value": "f5b6f598c0a968162dfdf8ec33c93171408bac411d833840b9df0bbefbf3ae7f"
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_sendDeployContractTransaction",
+    "description": "Sends data for creating a transaction if sender address private key is stored in keystore.The transaction used for deploying the contract.",
+    "params": [
+      {
+        "name": "sender_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/sender_address"
+        }
+      },
+      {
+        "name": "amount",
+        "required": true,
+        "description": "Amount of atto tolars to send.",
+        "schema": {
+          "$ref": "#/components/schemas/atto_tolar"
+        }
+      },
+      {
+        "name": "sender_address_password",
+        "required": true,
+        "description": "The password to unlock private key for sender address, empty if address is not locked.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gas",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas"
+        }
+      },
+      {
+        "name": "gas_price",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas_price"
+        }
+      },
+      {
+        "name": "data",
+        "required": true,
+        "description": "Smart contract bytecode in hex format.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      },
+      {
+        "name": "nonce",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/nonce"
+        }
+      },
+      {
+        "name": "network_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/network_id"
+        }
+      }
+    ],
+    "result": {
+      "name": "Transaction hash",
+      "description": "Hash of created transaction that can be used to obtain information about created transaction.",
+      "schema": {
+        "$ref": "#/components/schemas/hash"
+      }
+    },
+    "examples": [
+      {
+        "name": "Send deploy contract transaction example",
+        "params": [
+          {
+            "name": "sender_address",
+            "value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+          },
+          {
+            "name": "amount",
+            "value": "0"
+          },
+          {
+            "name": "sender_address_password",
+            "value": "pas123"
+          },
+          {
+            "name": "gas",
+            "value": "200000"
+          },
+          {
+            "name": "gas_price",
+            "value": "1"
+          },
+          {
+            "name": "data",
+            "value": "6080604052341561000f57600080fd5b60b98061001d6000396000f300608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063b3de648b146044575b600080fd5b3415604e57600080fd5b606a600480360381019080803590602001909291905050506080565b6040518082815260200191505060405180910390f35b60006007820290509190505600a165627a7a72305820f294e834212334e2978c6dd090355312a3f0f9476b8eb98fb480406fc2728a960029"
+          },
+          {
+            "name": "nonce",
+            "value": "0"
+          },
+          {
+            "name": "network_id",
+            "value": "1"
+          }
+        ],
+        "result": {
+          "name": "Send deploy contract transaction example result",
+          "value": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+        }
+      }
+    ]
+  },
+  {
+    "name": "account_sendExecuteFunctionTransaction",
+    "description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction is used for executing contract functions.",
+    "params": [
+      {
+        "name": "sender_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/sender_address"
+        }
+      },
+      {
+        "name": "receiver_address",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/receiver_address"
+        }
+      },
+      {
+        "name": "amount",
+        "required": true,
+        "description": "Amount of atto tolars to send.",
+        "schema": {
+          "$ref": "#/components/schemas/atto_tolar"
+        }
+      },
+      {
+        "name": "sender_address_password",
+        "required": true,
+        "description": "The password to unlock private key for sender address, empty if address is not locked.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gas",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas"
+        }
+      },
+      {
+        "name": "gas_price",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/gas_price"
+        }
+      },
+      {
+        "name": "data",
+        "required": true,
+        "description": "Smart contract bytecode in hex format.",
+        "schema": {
+          "$ref": "#/components/schemas/bytes"
+        }
+      },
+      {
+        "name": "nonce",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/nonce"
+        }
+      },
+      {
+        "name": "network_id",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/network_id"
+        }
+      }
+    ],
+    "result": {
+      "name": "Transaction hash",
+      "description": "Hash of created transaction that can be used to obtain information about created transaction.",
+      "schema": {
+        "$ref": "#/components/schemas/hash"
+      }
+    },
+    "examples": [
+      {
+        "name": "Send execute function transaction example",
+        "params": [
+          {
+            "name": "sender_address",
+            "value": "54948c78114bc39675157e097830ae63c0da7857a19c13aec7"
+          },
+          {
+            "name": "receiver_address",
+            "value": "54949f54114bc39675157e123830ae7a70da7adfa19c24c8db"
+          },
+          {
+            "name": "amount",
+            "value": "100"
+          },
+          {
+            "name": "sender_address_password",
+            "value": "pas123"
+          },
+          {
+            "name": "gas",
+            "value": "210000"
+          },
+          {
+            "name": "gas_price",
+            "value": "1"
+          },
+          {
+            "name": "data",
+            "value": "b3de648b00000000000000000000000000000000000000000000000000000001"
+          },
+          {
+            "name": "nonce",
+            "value": "0"
+          },
+          {
+            "name": "network_id",
+            "value": "1"
+          }
+        ],
+        "result": {
+          "name": "Send execute function transaction example result",
+          "value": "c5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,195 @@
+{
+  "LogEntryResponse": {
+    "type": "object",
+    "title": "Log entry response",
+    "required": [
+    ],
+    "properties": {
+      "address": {
+        "title": "Address",
+        "$ref": "#/components/schemas/address"
+      },
+      "topics": {
+        "title": "Topics",
+        "description": "Index names/arguments used for indexable search.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/hash"
+        }
+      },
+      "data": {
+        "title": "Data",
+        "description": "Log data.",
+        "$ref": "#/components/schemas/bytes"
+      }
+    }
+  },
+  "TransactionResponse": {
+    "type": "object",
+    "title": "Transaction response",
+    "required": [
+      "transaction_hash",
+      "block_hash",
+      "transaction_index",
+      "sender_address",
+      "receiver_address",
+      "value",
+      "gas",
+      "gas_price",
+      "data",
+      "nonce",
+      "network_id",
+      "confirmation_timestamp",
+      "gas_used",
+      "gas_refunded",
+      "new_address",
+      "output",
+      "excepted",
+      "exception"
+    ],
+    "properties": {
+      "transaction_hash": {
+        "title": "Transaction hash",
+        "$ref": "#/components/schemas/hash"
+      },
+      "block_hash": {
+        "title": "Block hash",
+        "description": "Hash of block where this transaction is found.",
+        "$ref": "#/components/schemas/hash"
+      },
+      "transaction_index": {
+        "$ref": "#/components/schemas/transaction_index"
+      },
+      "sender_address": {
+        "$ref": "#/components/schemas/sender_address"
+      },
+      "receiver_address": {
+        "$ref": "#/components/schemas/receiver_address"
+      },
+      "value": {
+        "title": "Value",
+        "description": "Amount sent in the transaction.",
+        "$ref": "#/components/schemas/atto_tolar"
+      },
+      "gas": {
+        "$ref": "#/components/schemas/gas"
+      },
+      "gas_price": {
+        "$ref": "#/components/schemas/gas_price"
+      },
+      "data": {
+        "title": "Data",
+        "description": "Smart contract bytecode. Not in hex format, transform hex bytecode to bytes.",
+        "$ref": "#/components/schemas/bytes"
+      },
+      "nonce": {
+        "$ref": "#/components/schemas/nonce"
+      },
+      "network_id": {
+        "$ref": "#/components/schemas/nonce"
+      },
+      "confirmation_timestamp": {
+        "$ref": "#/components/schemas/confirmation_timestamp"
+      },
+      "gas_used": {
+        "title": "Gas used",
+        "description": "The gas amount used executing transaction.",
+        "$ref": "#/components/schemas/atto_tolar"
+      },
+      "gas_refunded": {
+        "title": "Gas refunded",
+        "description": "The amount that is refunded in special cases.",
+        "$ref": "#/components/schemas/atto_tolar"
+      },
+      "new_address": {
+        "title": "New address",
+        "description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+        "$ref": "#/components/schemas/address"
+      },
+      "output": {
+        "title": "Output",
+        "description": "The returned data of the call, e.g. a smart contract functions return value.",
+        "$ref": "#/components/schemas/bytes"
+      },
+      "excepted": {
+        "title": "Excepted",
+        "description": "True if an exception happened, false if transaction execution was successful.",
+        "type": "boolean"
+      },
+      "exception": {
+        "title": "Exception",
+        "description": "Evm exception code.",
+        "$ref": "#/components/schemas/uint32"
+      }
+    }
+  },
+  "TransactionReceiptResponse": {
+    "type": "object",
+    "required": [
+      "excepted",
+      "block_hash",
+      "block_index",
+      "transaction_hash",
+      "transaction_index",
+      "sender_address",
+      "receiver_address",
+      "new_address",
+      "gas_used",
+      "logs",
+      "exception"
+    ],
+    "properties": {
+      "excepted": {
+        "title": "Excepted",
+        "description": "False if transaction execution was successful, true if the EVM reverted the transaction.",
+        "type": "boolean"
+      },
+      "block_hash": {
+        "title": "Block hash",
+        "description": "Block hash where this transaction is found.",
+        "$ref": "#/components/schemas/hash"
+      },
+      "block_index": {
+        "description": "Block index where this transaction is found.",
+        "$ref": "#/components/schemas/block_index"
+      },
+      "transaction_hash": {
+        "title": "Transaction hash",
+        "description": "Transaction hash.",
+        "$ref": "#/components/schemas/hash"
+      },
+      "transaction_index": {
+        "$ref": "#/components/schemas/transaction_index"
+      },
+      "sender_address": {
+        "$ref": "#/components/schemas/sender_address"
+      },
+      "receiver_address": {
+        "$ref": "#/components/schemas/receiver_address"
+      },
+      "new_address": {
+        "title": "New address",
+        "description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+        "$ref": "#/components/schemas/address"
+      },
+      "gas_used": {
+        "title": "Gas used",
+        "description": "The gas amount used executing transaction.",
+        "$ref": "#/components/schemas/atto_tolar"
+      },
+      "logs": {
+        "title": "Logs",
+        "description": "An array of log objects which transaction generated.",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/LogEntryResponse"
+        }
+      },
+      "exception": {
+        "title": "Excepted",
+        "description": "True if an exception happened, false if transaction execution was successful.",
+        "type": "boolean"
+      }
+    }
+  }
+}

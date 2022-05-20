@@ -1,0 +1,51 @@
+{
+  "PastEventResponse": {
+    "type": "object",
+    "title": "Past event response",
+    "required": [
+      "address",
+      "topic",
+      "block_hash",
+      "block_index"
+    ],
+    "properties": {
+      "address": {
+        "title": "Address",
+        "description": "Address of the contract.",
+        "$ref": "#/components/schemas/address"
+      },
+      "topic": {
+        "title": "Topic",
+        "description": "Keccak256 of the event name and arguments.",
+        "$ref": "#/components/schemas/bytes"
+      },
+      "topic_arg_0": {
+        "title": "Topic arg0",
+        "$ref": "#/components/schemas/hash"
+      },
+      "topic_arg_1": {
+        "title": "Topic arg1",
+        "$ref": "#/components/schemas/hash"
+      },
+      "topic_arg_2": {
+        "title": "Topic arg2",
+        "$ref": "#/components/schemas/hash"
+      },
+      "data": {
+        "title": "Data",
+        "$ref": "#/components/schemas/bytes"
+      },
+      "transaction_hash": {
+        "title": "Transaction hash",
+        "$ref": "#/components/schemas/hash"
+      },
+      "block_hash": {
+        "title": "Block hash",
+        "$ref": "#/components/schemas/hash"
+      },
+      "block_index": {
+        "$ref": "#/components/schemas/block_index"
+      }
+    }
+  }
+}

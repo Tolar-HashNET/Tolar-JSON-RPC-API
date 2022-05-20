@@ -5,35 +5,86 @@
     "minimum": 0,
     "maximum": 18446744073709551615
   },
-
+  "uint32": {
+    "title": "Unsigned integer 32 bit",
+    "type": "number",
+    "minimum": 0,
+    "maximum": 4294967295
+  },
   "uint256": {
     "title": "Unsigned integer 256 bit",
     "type": "string",
     "pattern": "^([1-9][0-9]{0,77}|0)$"
   },
-
+  "atto_tolar": {
+    "title": "Atto Tolar",
+    "description": "Smallest available amount of tolar. 1 attoTolar = 0.000000000000000001 Tol",
+    "$ref": "#/components/schemas/uint256"
+  },
+  "nonce": {
+    "title": "Nonce",
+    "description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce).",
+    "$ref": "#/components/schemas/uint256"
+  },
+  "hash": {
+    "title": "Hash",
+    "type": "string",
+    "pattern": "^[0-9,a-f,A-F]{64}$"
+  },
+  "bytes": {
+    "title": "Hex encoded bytes",
+    "type": "string",
+    "pattern": "^[0-9,a-f,A-F]*$"
+  },
   "address": {
     "title": "Hex encoded address",
     "type": "string",
     "description": "Hex encoded address 50 digits long. Must start with 54 (ASCII for letter T).",
     "pattern": "^54[0-9,a-f,A-F]{48}$"
   },
-
   "network_id": {
     "title": "Network id",
-    "description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4).",
-    "$ref": "#/components/schemas/uint256"
+    "description": "Unique network identifier on which transaction is valid on. (i.e. mainnet = 1, testnet = 3, staging = 4 ...).",
+    "$ref": "#/components/schemas/uint64"
   },
-
-  "hash": {
-    "title": "Hash",
-    "type": "string",
-    "pattern": "^[0-9,a-f,A-F]{64}$"
+  "block_index": {
+    "title": "Block index",
+    "description": "Unique sequential auto incremented block id.",
+    "$ref": "#/components/schemas/uint64"
   },
-
-  "bytes": {
-    "title": "Hex encoded bytes",
-    "type": "string",
-    "pattern": "^[0-9a-f]*$"
+  "transaction_index": {
+    "title": "Transaction index",
+    "description": "Index of transaction inside a block.",
+    "$ref": "#/components/schemas/uint64"
+  },
+  "timestamp": {
+    "title": "Timestamp",
+    "description": "Milliseconds since Unix Epoch.",
+    "$ref": "#/components/schemas/uint64"
+  },
+  "confirmation_timestamp": {
+    "title": "Confirmation timestamp",
+    "description": "The time when the block was confirmed.",
+    "$ref": "#/components/schemas/timestamp"
+  },
+  "gas": {
+    "title": "Gas",
+    "description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts).",
+    "$ref": "#/components/schemas/atto_tolar"
+  },
+  "gas_price": {
+    "title": "Gas price",
+    "description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price).",
+    "$ref": "#/components/schemas/atto_tolar"
+  },
+  "sender_address": {
+    "title": "Sender address",
+    "description": "The address that initiated this transaction.",
+    "$ref": "#/components/schemas/address"
+  },
+  "receiver_address": {
+    "title": "Receiver address",
+    "description": "The address that received this transaction.",
+    "$ref": "#/components/schemas/address"
   }
 }
