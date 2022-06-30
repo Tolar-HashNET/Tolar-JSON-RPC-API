@@ -2194,139 +2194,149 @@
 				"name": "Transactions",
 				"description": "Requested transactions.",
 				"schema": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"title": "Transaction response",
-						"required": [
-							"transaction_hash",
-							"block_hash",
-							"transaction_index",
-							"sender_address",
-							"receiver_address",
-							"value",
-							"gas",
-							"gas_price",
-							"data",
-							"nonce",
-							"network_id",
-							"confirmation_timestamp",
-							"gas_used",
-							"gas_refunded",
-							"new_address",
-							"output",
-							"excepted",
-							"exception"
-						],
-						"properties": {
-							"transaction_hash": {
-								"title": "Transaction hash",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"block_hash": {
-								"title": "Block hash",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$",
-								"description": "Hash of block where this transaction is found."
-							},
-							"transaction_index": {
-								"title": "Transaction index",
-								"type": "number",
-								"minimum": 0,
-								"maximum": 18446744073709552000,
-								"description": "Index of transaction inside a block."
-							},
-							"sender_address": {
-								"title": "Sender address",
-								"type": "string",
-								"description": "The address that initiated this transaction.",
-								"pattern": "^54[0-9,a-f,A-F]{48}$"
-							},
-							"receiver_address": {
-								"title": "Receiver address",
-								"type": "string",
-								"description": "The address that received this transaction.",
-								"pattern": "^54[0-9,a-f,A-F]{48}$"
-							},
-							"value": {
-								"title": "Value",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "Amount sent in the transaction."
-							},
-							"gas": {
-								"title": "Gas",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
-							},
-							"gas_price": {
-								"title": "Gas price",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
-							},
-							"data": {
-								"title": "Data",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]*$",
-								"description": "Smart contract bytecode. Not in hex format, transform hex bytecode to bytes."
-							},
-							"nonce": {
-								"title": "Nonce",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
-							},
-							"network_id": {
-								"title": "Nonce",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
-							},
-							"confirmation_timestamp": {
-								"title": "Confirmation timestamp",
-								"type": "number",
-								"minimum": 0,
-								"maximum": 18446744073709552000,
-								"description": "The time when the block was confirmed."
-							},
-							"gas_used": {
-								"title": "Gas used",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "The gas amount used executing transaction."
-							},
-							"gas_refunded": {
-								"title": "Gas refunded",
-								"type": "string",
-								"pattern": "^([1-9][0-9]{0,77}|0)$",
-								"description": "The amount that is refunded in special cases."
-							},
-							"new_address": {
-								"title": "New address",
-								"type": "string",
-								"description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
-								"pattern": "^54[0-9,a-f,A-F]{48}$"
-							},
-							"output": {
-								"title": "Output",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]*$",
-								"description": "The returned data of the call, e.g. a smart contract functions return value."
-							},
-							"excepted": {
-								"title": "Excepted",
-								"description": "True if an exception happened, false if transaction execution was successful.",
-								"type": "boolean"
-							},
-							"exception": {
-								"title": "Exception",
-								"type": "number",
-								"minimum": 0,
-								"maximum": 4294967295,
-								"description": "Evm exception code."
+					"type": "object",
+					"title": "Transactions",
+					"required": [
+						"transactions"
+					],
+					"properties": {
+						"transactions": {
+							"title": "Transactions",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"title": "Transaction response",
+								"required": [
+									"transaction_hash",
+									"block_hash",
+									"transaction_index",
+									"sender_address",
+									"receiver_address",
+									"value",
+									"gas",
+									"gas_price",
+									"data",
+									"nonce",
+									"network_id",
+									"confirmation_timestamp",
+									"gas_used",
+									"gas_refunded",
+									"new_address",
+									"output",
+									"excepted",
+									"exception"
+								],
+								"properties": {
+									"transaction_hash": {
+										"title": "Transaction hash",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"block_hash": {
+										"title": "Block hash",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$",
+										"description": "Hash of block where this transaction is found."
+									},
+									"transaction_index": {
+										"title": "Transaction index",
+										"type": "number",
+										"minimum": 0,
+										"maximum": 18446744073709552000,
+										"description": "Index of transaction inside a block."
+									},
+									"sender_address": {
+										"title": "Sender address",
+										"type": "string",
+										"description": "The address that initiated this transaction.",
+										"pattern": "^54[0-9,a-f,A-F]{48}$"
+									},
+									"receiver_address": {
+										"title": "Receiver address",
+										"type": "string",
+										"description": "The address that received this transaction.",
+										"pattern": "^54[0-9,a-f,A-F]{48}$"
+									},
+									"value": {
+										"title": "Value",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "Amount sent in the transaction."
+									},
+									"gas": {
+										"title": "Gas",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "Maximum gas (gas limit) to spend to send this transaction (gas used for transaction sending or computational work in case of smart contracts)."
+									},
+									"gas_price": {
+										"title": "Gas price",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "Amount of gas to pay for each unit of gas, greater gas price is related to faster time to execute the transaction (transaction fee = gas * gas price)."
+									},
+									"data": {
+										"title": "Data",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]*$",
+										"description": "Smart contract bytecode. Not in hex format, transform hex bytecode to bytes."
+									},
+									"nonce": {
+										"title": "Nonce",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+									},
+									"network_id": {
+										"title": "Nonce",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "Unique transaction index for particular sender (auto-incremented value, each transaction has unique nonce)."
+									},
+									"confirmation_timestamp": {
+										"title": "Confirmation timestamp",
+										"type": "number",
+										"minimum": 0,
+										"maximum": 18446744073709552000,
+										"description": "The time when the block was confirmed."
+									},
+									"gas_used": {
+										"title": "Gas used",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "The gas amount used executing transaction."
+									},
+									"gas_refunded": {
+										"title": "Gas refunded",
+										"type": "string",
+										"pattern": "^([1-9][0-9]{0,77}|0)$",
+										"description": "The amount that is refunded in special cases."
+									},
+									"new_address": {
+										"title": "New address",
+										"type": "string",
+										"description": "New address that is created after executing transaction (deployed contract address). Zero address if no contract was created.",
+										"pattern": "^54[0-9,a-f,A-F]{48}$"
+									},
+									"output": {
+										"title": "Output",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]*$",
+										"description": "The returned data of the call, e.g. a smart contract functions return value."
+									},
+									"excepted": {
+										"title": "Excepted",
+										"description": "True if an exception happened, false if transaction execution was successful.",
+										"type": "boolean"
+									},
+									"exception": {
+										"title": "Exception",
+										"type": "number",
+										"minimum": 0,
+										"maximum": 4294967295,
+										"description": "Evm exception code."
+									}
+								}
 							}
 						}
 					}
@@ -2351,28 +2361,30 @@
 					],
 					"result": {
 						"name": "Get transaction list example result",
-						"value": [
-							{
-								"transaction_hash": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
-								"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
-								"transaction_index": 1,
-								"sender_address": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642",
-								"receiver_address": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab",
-								"value": "569000",
-								"gas": "21000",
-								"gas_price": "1",
-								"data": "",
-								"nonce": "7",
-								"network_id": 1,
-								"confirmation_timestamp": 1652192733280,
-								"gas_used": "21000",
-								"gas_refunded": "0",
-								"new_address": "",
-								"output": "",
-								"excepted": false,
-								"exception": 0
-							}
-						]
+						"value": {
+							"transactions": [
+								{
+									"transaction_hash": "5ab70e032db7303b1de31147602970098c21c75904e7281e89cde960d5ede1d1",
+									"block_hash": "998666a2af4e03f941799a778550d217eb021a0e3daf35eedec5cc2a477a6b3b",
+									"transaction_index": 1,
+									"sender_address": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642",
+									"receiver_address": "5451ff8b773fa696128c4bf7af35b828cdf96b0c1fd83563ab",
+									"value": "569000",
+									"gas": "21000",
+									"gas_price": "1",
+									"data": "",
+									"nonce": "7",
+									"network_id": 1,
+									"confirmation_timestamp": 1652192733280,
+									"gas_used": "21000",
+									"gas_refunded": "0",
+									"new_address": "",
+									"output": "",
+									"excepted": false,
+									"exception": 0
+								}
+							]
+						}
 					}
 				}
 			]
@@ -2407,65 +2419,75 @@
 				"name": "Past events",
 				"description": "Contracts emitted events.",
 				"schema": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"title": "Past event response",
-						"required": [
-							"address",
-							"topic",
-							"block_hash",
-							"block_index"
-						],
-						"properties": {
-							"address": {
-								"title": "Address",
-								"type": "string",
-								"description": "Address of the contract.",
-								"pattern": "^54[0-9,a-f,A-F]{48}$"
-							},
-							"topic": {
-								"title": "Topic",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]*$",
-								"description": "Keccak256 of the event name and arguments."
-							},
-							"topic_arg_0": {
-								"title": "Topic arg0",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"topic_arg_1": {
-								"title": "Topic arg1",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"topic_arg_2": {
-								"title": "Topic arg2",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"data": {
-								"title": "Data",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]*$"
-							},
-							"transaction_hash": {
-								"title": "Transaction hash",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"block_hash": {
-								"title": "Block hash",
-								"type": "string",
-								"pattern": "^[0-9,a-f,A-F]{64}$"
-							},
-							"block_index": {
-								"title": "Block index",
-								"type": "number",
-								"minimum": 0,
-								"maximum": 18446744073709552000,
-								"description": "Unique sequential auto incremented block id."
+					"type": "object",
+					"title": "Past events",
+					"required": [
+						"past_events"
+					],
+					"properties": {
+						"past_events": {
+							"title": "Past events",
+							"type": "array",
+							"items": {
+								"type": "object",
+								"title": "Past event response",
+								"required": [
+									"address",
+									"topic",
+									"block_hash",
+									"block_index"
+								],
+								"properties": {
+									"address": {
+										"title": "Address",
+										"type": "string",
+										"description": "Address of the contract.",
+										"pattern": "^54[0-9,a-f,A-F]{48}$"
+									},
+									"topic": {
+										"title": "Topic",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]*$",
+										"description": "Keccak256 of the event name and arguments."
+									},
+									"topic_arg_0": {
+										"title": "Topic arg0",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"topic_arg_1": {
+										"title": "Topic arg1",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"topic_arg_2": {
+										"title": "Topic arg2",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"data": {
+										"title": "Data",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]*$"
+									},
+									"transaction_hash": {
+										"title": "Transaction hash",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"block_hash": {
+										"title": "Block hash",
+										"type": "string",
+										"pattern": "^[0-9,a-f,A-F]{64}$"
+									},
+									"block_index": {
+										"title": "Block index",
+										"type": "number",
+										"minimum": 0,
+										"maximum": 18446744073709552000,
+										"description": "Unique sequential auto incremented block id."
+									}
+								}
 							}
 						}
 					}
@@ -2486,29 +2508,31 @@
 					],
 					"result": {
 						"name": "Get past events example result",
-						"value": [
-							{
-								"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
-								"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
-								"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
-								"topic_arg_1": "0000000000000000000000000000000000000000000000000000000000000000",
-								"topic_arg_2": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aaa",
-								"data": "74686973206973206669727374206c617374206576656e74",
-								"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d03414643dd",
-								"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
-								"block_index": 12345
-							},
-							{
-								"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
-								"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
-								"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
-								"topic_arg_1": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aa6",
-								"data": "74686973206973207365636f6e64206c617374206576656e74",
-								"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d0341464333",
-								"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
-								"block_index": 12345
-							}
-						]
+						"value": {
+							"past_events": [
+								{
+									"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+									"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+									"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_1": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_2": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aaa",
+									"data": "74686973206973206669727374206c617374206576656e74",
+									"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d03414643dd",
+									"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+									"block_index": 12345
+								},
+								{
+									"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+									"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+									"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_1": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aa6",
+									"data": "74686973206973207365636f6e64206c617374206576656e74",
+									"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d0341464333",
+									"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+									"block_index": 12345
+								}
+							]
+						}
 					}
 				}
 			]
