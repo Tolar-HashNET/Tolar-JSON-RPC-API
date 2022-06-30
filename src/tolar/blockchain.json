@@ -2,6 +2,7 @@
   {
     "name": "tol_getBlockCount",
     "description": "Returns total number of block in blockchain.",
+    "paramStructure": "by-name",
     "params": [
     ],
     "result": {
@@ -26,6 +27,7 @@
   {
     "name": "tol_getLatestBlock",
     "description": "Retrieves latest block from the blockchain.",
+    "paramStructure": "by-name",
     "params": [
     ],
     "result": {
@@ -60,6 +62,7 @@
   {
     "name": "tol_getBlockByHash",
     "description": "Returns block by its hash.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "block_hash",
@@ -106,6 +109,7 @@
   {
     "name": "tol_getBlockByIndex",
     "description": "Returns block by its index.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "block_index",
@@ -152,6 +156,7 @@
   {
     "name": "tol_getGasEstimate",
     "description": "Executes given transaction and returns amount of used gas. After execution transaction is reverted.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "sender_address",
@@ -267,6 +272,7 @@
   {
     "name": "tol_tryCallTransaction",
     "description": "Executes read only contract functions on evm without spending gas or having any effect to address balance and nonce.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "sender_address",
@@ -402,6 +408,7 @@
   {
     "name": "tol_getBalance",
     "description": "Get balance for selected address on the specified block in the blockchain.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "address",
@@ -451,6 +458,7 @@
   {
     "name": "tol_getLatestBalance",
     "description": "Returns current balance for given address on last block in blockchain.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "address",
@@ -488,6 +496,7 @@
   {
     "name": "tol_getNonce",
     "description": "Returns next available nonce value for given address.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "address",
@@ -524,6 +533,7 @@
   {
     "name": "tol_getBlockchainInfo",
     "description": "Retrieves blockchain statistics information.",
+    "paramStructure": "by-name",
     "params": [
     ],
     "result": {
@@ -575,6 +585,7 @@
   {
     "name": "tol_getTransaction",
     "description": "Retrieves confirmed transaction information from the current node blockchain.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "transaction_hash",
@@ -630,6 +641,7 @@
   {
     "name": "tol_getTransactionList",
     "description": "Retrieves most recent transaction list based on transaction limit and how many transactions to skip.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "addresses",
@@ -729,6 +741,7 @@
   {
     "name": "tol_getPastEvents",
     "description": "Returns emitted events by the contract.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "address",
@@ -815,6 +828,7 @@
   {
     "name": "tol_getTransactionReceipt",
     "description": "Retrieves transaction receipt information from the blockchain.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "transaction_hash",

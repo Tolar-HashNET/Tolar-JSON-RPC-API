@@ -2,6 +2,7 @@
   {
     "name": "tx_sendSignedTransaction",
     "description": "Send signed transaction.",
+    "paramStructure": "by-name",
     "params": [
       {
         "name": "signed_transaction",
