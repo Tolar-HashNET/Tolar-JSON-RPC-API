@@ -78,10 +78,6 @@
           {
             "name": "master_password",
             "value": ""
-          },
-          {
-            "name": "mnemonic",
-            "value": "siege van edit river asset always material powder swallow glad helmet wait"
           }
         ],
         "result": {
@@ -95,8 +91,7 @@
     "name": "account_listAddresses",
     "description": "List all addresses in keystore attached to master or thin node.",
     "paramStructure": "by-name",
-    "params": [
-    ],
+    "params": [],
     "result": {
       "name": "Listed addresses",
       "description": "All addresses in keystore.",
@@ -111,8 +106,7 @@
       {
         "name": "List addresses example",
         "description": "Lists all addresses in keystore.",
-        "params": [
-        ],
+        "params": [],
         "result": {
           "name": "List addresses example result",
           "value": [

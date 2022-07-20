@@ -9,6 +9,13 @@
 		},
 		"version": "0.0.0"
 	},
+	"servers": [
+		{
+			"name": "Local Thin Node",
+			"summary": "Simple local thin node server",
+			"url": "http://127.0.0.1:8200/jsonrpc"
+		}
+	],
 	"methods": [
 		{
 			"name": "account_create",
@@ -89,10 +96,6 @@
 						{
 							"name": "master_password",
 							"value": ""
-						},
-						{
-							"name": "mnemonic",
-							"value": "siege van edit river asset always material powder swallow glad helmet wait"
 						}
 					],
 					"result": {

@@ -40,6 +40,13 @@ const doc = {
     },
     version: "0.0.0"
   },
+  servers: [
+    {
+      name: "Local Thin Node",
+      summary: "Simple local thin node server",
+      url: "http://127.0.0.1:8200/jsonrpc",
+    }
+  ],
   methods: methods,
   components: {
     schemas: schemas
