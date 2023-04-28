@@ -1,8 +1,8 @@
 [
   {
     "name": "account_create",
-    "description": "Creates new keystore.",
-    "paramStructure": "by-name",
+    "description": "Creates and opens new keystore.",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "master_password",
@@ -23,7 +23,7 @@
     ],
     "result": {
       "name": "Is account created",
-      "description": "True if account was successfully created, else false.",
+      "description": "True if newly account was successfully created. If account already exists returns false.",
       "schema": {
         "type": "boolean"
       }
@@ -52,7 +52,7 @@
   {
     "name": "account_open",
     "description": "Opens existing keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "master_password",
@@ -65,15 +65,15 @@
     ],
     "result": {
       "name": "Is account opened",
-      "description": "True if account was successfully created, else false.",
+      "description": "True if account was newly opened, if account is already opened returns false.",
       "schema": {
         "type": "boolean"
       }
     },
     "examples": [
       {
-        "name": "Create account example",
-        "description": "Creates keystore without master password.",
+        "name": "Open account example",
+        "description": "Opens keystore without master password.",
         "params": [
           {
             "name": "master_password",
@@ -81,7 +81,7 @@
           }
         ],
         "result": {
-          "name": "Create account example result",
+          "name": "Opens account example result",
           "value": true
         }
       }
@@ -90,7 +90,7 @@
   {
     "name": "account_listAddresses",
     "description": "List all addresses in keystore attached to master or thin node.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [],
     "result": {
       "name": "Listed addresses",
@@ -120,7 +120,7 @@
   {
     "name": "account_verifyAddress",
     "description": "Verifies if provided address string is in valid Tolar address format.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "address",
@@ -158,7 +158,7 @@
   {
     "name": "account_createNewAddress",
     "description": "Creates new address in keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "name",
@@ -219,7 +219,7 @@
   {
     "name": "account_exportKeyFile",
     "description": "Exports key file for selected address from keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "address",
@@ -257,7 +257,7 @@
   {
     "name": "account_importKeyFile",
     "description": "Imports key file to keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "json_key_file",
@@ -327,7 +327,7 @@
   {
     "name": "account_importRawPrivateKey",
     "description": "Imports raw private key to keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "raw_private_key",
@@ -402,7 +402,7 @@
   {
     "name": "account_listBalancePerAddress",
     "description": "List all addresses stored in keystore with their associated name and current balance status.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
     ],
     "result": {
@@ -460,7 +460,7 @@
   {
     "name": "account_changePassword",
     "description": "Changes master password used to lock entire keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "old_master_password",
@@ -510,7 +510,7 @@
   {
     "name": "account_changeAddressPassword",
     "description": "Changes lock password for the single address used to lock its private key in keystore.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "address",
@@ -572,7 +572,7 @@
   {
     "name": "account_sendRawTransaction",
     "description": "Creates transaction from data given in request parameters. Verify and sign the transaction using keystore and then sends the transaction to the master node where it will be executed.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "sender_address",
@@ -686,7 +686,7 @@
           },
           {
             "name": "network_id",
-            "value": "1"
+            "value": 1
           }
         ],
         "result": {
@@ -699,7 +699,7 @@
   {
     "name": "account_sendFundTransferTransaction",
     "description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction used for transferring funds from the sender to the receiver address.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "sender_address",
@@ -801,7 +801,7 @@
           },
           {
             "name": "network_id",
-            "value": "1"
+            "value": 1
           }
         ],
         "result": {
@@ -814,7 +814,7 @@
   {
     "name": "account_sendDeployContractTransaction",
     "description": "Sends data for creating a transaction if sender address private key is stored in keystore.The transaction used for deploying the contract.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "sender_address",
@@ -917,7 +917,7 @@
           },
           {
             "name": "network_id",
-            "value": "1"
+            "value": 1
           }
         ],
         "result": {
@@ -930,7 +930,7 @@
   {
     "name": "account_sendExecuteFunctionTransaction",
     "description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction is used for executing contract functions.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
       {
         "name": "sender_address",
@@ -1044,7 +1044,7 @@
           },
           {
             "name": "network_id",
-            "value": "1"
+            "value": 1
           }
         ],
         "result": {

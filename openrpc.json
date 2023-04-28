@@ -19,8 +19,8 @@
 	"methods": [
 		{
 			"name": "account_create",
-			"description": "Creates new keystore.",
-			"paramStructure": "by-name",
+			"description": "Creates and opens new keystore.",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "master_password",
@@ -41,7 +41,7 @@
 			],
 			"result": {
 				"name": "Is account created",
-				"description": "True if account was successfully created, else false.",
+				"description": "True if newly account was successfully created. If account already exists returns false.",
 				"schema": {
 					"type": "boolean"
 				}
@@ -70,7 +70,7 @@
 		{
 			"name": "account_open",
 			"description": "Opens existing keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "master_password",
@@ -83,15 +83,15 @@
 			],
 			"result": {
 				"name": "Is account opened",
-				"description": "True if account was successfully created, else false.",
+				"description": "True if account was newly opened, if account is already opened returns false.",
 				"schema": {
 					"type": "boolean"
 				}
 			},
 			"examples": [
 				{
-					"name": "Create account example",
-					"description": "Creates keystore without master password.",
+					"name": "Open account example",
+					"description": "Opens keystore without master password.",
 					"params": [
 						{
 							"name": "master_password",
@@ -99,7 +99,7 @@
 						}
 					],
 					"result": {
-						"name": "Create account example result",
+						"name": "Opens account example result",
 						"value": true
 					}
 				}
@@ -108,7 +108,7 @@
 		{
 			"name": "account_listAddresses",
 			"description": "List all addresses in keystore attached to master or thin node.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Listed addresses",
@@ -141,7 +141,7 @@
 		{
 			"name": "account_verifyAddress",
 			"description": "Verifies if provided address string is in valid Tolar address format.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -181,7 +181,7 @@
 		{
 			"name": "account_createNewAddress",
 			"description": "Creates new address in keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "name",
@@ -245,7 +245,7 @@
 		{
 			"name": "account_exportKeyFile",
 			"description": "Exports key file for selected address from keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -283,7 +283,7 @@
 		{
 			"name": "account_importKeyFile",
 			"description": "Imports key file to keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "json_key_file",
@@ -353,7 +353,7 @@
 		{
 			"name": "account_importRawPrivateKey",
 			"description": "Imports raw private key to keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "raw_private_key",
@@ -428,7 +428,7 @@
 		{
 			"name": "account_listBalancePerAddress",
 			"description": "List all addresses stored in keystore with their associated name and current balance status.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Balance per addresses",
@@ -489,7 +489,7 @@
 		{
 			"name": "account_changePassword",
 			"description": "Changes master password used to lock entire keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "old_master_password",
@@ -539,7 +539,7 @@
 		{
 			"name": "account_changeAddressPassword",
 			"description": "Changes lock password for the single address used to lock its private key in keystore.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -604,7 +604,7 @@
 		{
 			"name": "account_sendRawTransaction",
 			"description": "Creates transaction from data given in request parameters. Verify and sign the transaction using keystore and then sends the transaction to the master node where it will be executed.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -744,7 +744,7 @@
 						},
 						{
 							"name": "network_id",
-							"value": "1"
+							"value": 1
 						}
 					],
 					"result": {
@@ -757,7 +757,7 @@
 		{
 			"name": "account_sendFundTransferTransaction",
 			"description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction used for transferring funds from the sender to the receiver address.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -883,7 +883,7 @@
 						},
 						{
 							"name": "network_id",
-							"value": "1"
+							"value": 1
 						}
 					],
 					"result": {
@@ -896,7 +896,7 @@
 		{
 			"name": "account_sendDeployContractTransaction",
 			"description": "Sends data for creating a transaction if sender address private key is stored in keystore.The transaction used for deploying the contract.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -1022,7 +1022,7 @@
 						},
 						{
 							"name": "network_id",
-							"value": "1"
+							"value": 1
 						}
 					],
 					"result": {
@@ -1035,7 +1035,7 @@
 		{
 			"name": "account_sendExecuteFunctionTransaction",
 			"description": "Sends data for creating a transaction if sender address private key is stored in keystore. The transaction is used for executing contract functions.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -1175,7 +1175,7 @@
 						},
 						{
 							"name": "network_id",
-							"value": "1"
+							"value": 1
 						}
 					],
 					"result": {
@@ -1188,7 +1188,7 @@
 		{
 			"name": "tol_getBlockCount",
 			"description": "Returns total number of block in blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Block count",
@@ -1214,7 +1214,7 @@
 		{
 			"name": "tol_getLatestBlock",
 			"description": "Retrieves latest block from the blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Latest block",
@@ -1293,7 +1293,7 @@
 		{
 			"name": "tol_getBlockByHash",
 			"description": "Returns block by its hash.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "block_hash",
@@ -1388,7 +1388,7 @@
 		{
 			"name": "tol_getBlockByIndex",
 			"description": "Returns block by its index.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "block_index",
@@ -1485,7 +1485,7 @@
 		{
 			"name": "tol_getGasEstimate",
 			"description": "Executes given transaction and returns amount of used gas. After execution transaction is reverted.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -1628,7 +1628,7 @@
 		{
 			"name": "tol_tryCallTransaction",
 			"description": "Executes read only contract functions on evm without spending gas or having any effect to address balance and nonce.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "sender_address",
@@ -1789,7 +1789,7 @@
 		{
 			"name": "tol_getBalance",
 			"description": "Get balance for selected address on the specified block in the blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -1849,7 +1849,7 @@
 		{
 			"name": "tol_getLatestBalance",
 			"description": "Returns current balance for given address on last block in blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -1893,7 +1893,7 @@
 		{
 			"name": "tol_getNonce",
 			"description": "Returns next available nonce value for given address.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -1936,7 +1936,7 @@
 		{
 			"name": "tol_getBlockchainInfo",
 			"description": "Retrieves blockchain statistics information.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Blockchain info",
@@ -1991,7 +1991,7 @@
 		{
 			"name": "tol_getTransaction",
 			"description": "Retrieves confirmed transaction information from the current node blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "transaction_hash",
@@ -2181,7 +2181,7 @@
 		{
 			"name": "tol_getTransactionList",
 			"description": "Retrieves most recent transaction list based on transaction limit and how many transactions to skip.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "addresses",
@@ -2422,7 +2422,7 @@
 		{
 			"name": "tol_getPastEvents",
 			"description": "Returns emitted events by the contract.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "address",
@@ -2571,7 +2571,7 @@
 		{
 			"name": "tol_getTransactionReceipt",
 			"description": "Retrieves transaction receipt information from the blockchain.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "transaction_hash",
@@ -2740,7 +2740,7 @@
 		{
 			"name": "net_peerCount",
 			"description": "Get current peer count in running HashNet network.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Peer count",
@@ -2765,7 +2765,7 @@
 		{
 			"name": "net_masterNodeCount",
 			"description": "Get current master nodes count in running HashNet network.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Master node count",
@@ -2790,7 +2790,7 @@
 		{
 			"name": "net_isMasterNode",
 			"description": "Check if this service is tolar HashNet master node.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [],
 			"result": {
 				"name": "Is master node",
@@ -2812,7 +2812,7 @@
 		{
 			"name": "tx_sendSignedTransaction",
 			"description": "Send signed transaction.",
-			"paramStructure": "by-name",
+			"paramStructure": "by-position",
 			"params": [
 				{
 					"name": "signed_transaction",
@@ -2838,7 +2838,7 @@
 					"name": "Send signed transaction example",
 					"params": [
 						{
-							"name": "SendSignedTxExampleParam",
+							"name": "signed_transaction",
 							"value": "0a7f0a323534313235316236613766396337626439613739353266336466323532623164633462373063353464386233306430616430123235346634366436313839373335616466343266363730383864336633626238336137333639633934363265663966346230331a012a22030186a02a01013201013a010040eaadc0e52412ca020a4033376232363961376632663831326261326134373961346437393162306465643162313437383031316661333063623535313364666536306637643334306436128201383235383661653739306334656435366534356635343736316365346434636463633237623462623664333931333733653365396366333766333164326562653230383763303366363265333065623437393064343337643436633134663136343437656262616462613964333764336537323937663332303637303162643430301a80013438633138376530643362613531343531626432323465383561633134326137656638626662386161356663343334303761363164353535336562363263363838353131316537653162396234326365663166373438383532303330613734363230623565616233343432373664336230373863626335356264386238306263"
 						}
 					],

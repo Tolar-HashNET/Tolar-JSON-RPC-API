@@ -2,7 +2,7 @@
   {
     "name": "net_peerCount",
     "description": "Get current peer count in running HashNet network.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [],
     "result": {
       "name": "Peer count",
@@ -25,7 +25,7 @@
   {
     "name": "net_masterNodeCount",
     "description": "Get current master nodes count in running HashNet network.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [],
     "result": {
       "name": "Master node count",
@@ -48,7 +48,7 @@
   {
     "name": "net_isMasterNode",
     "description": "Check if this service is tolar HashNet master node.",
-    "paramStructure": "by-name",
+    "paramStructure": "by-position",
     "params": [
     ],
     "result": {
