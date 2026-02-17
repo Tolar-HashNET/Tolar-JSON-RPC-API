@@ -7,13 +7,28 @@
 			"name": "Unknown",
 			"url": "https://unknown"
 		},
-		"version": "0.0.0"
+		"version": "1.3.0"
 	},
 	"servers": [
 		{
-			"name": "Local Thin Node",
-			"summary": "Simple local thin node server",
-			"url": "http://127.0.0.1:8200/jsonrpc"
+			"name": "Mainnet",
+			"summary": "[network_id: 1]",
+			"url": "https://jsongw.mainnet.tolar.io/jsonrpc"
+		},
+		{
+			"name": "Testnet",
+			"summary": "[network_id: 2]",
+			"url": "https://jsongw.testnet.tolar.io/jsonrpc"
+		},
+		{
+			"name": "Stagenet",
+			"summary": "[network_id: 3]",
+			"url": "https://jsongw.staging.tolar.io/jsonrpc"
+		},
+		{
+			"name": "EuChain",
+			"summary": "[network_id: 5]",
+			"url": "https://jsongw.euchain.org/jsonrpc"
 		}
 	],
 	"methods": [
@@ -1496,10 +1511,27 @@
 				}
 			],
 			"result": {
-				"name": "Balance",
+				"name": "Balance at block",
 				"description": "Balance for given address at block with specified index.",
 				"schema": {
-					"$ref": "#/components/schemas/atto_tolar"
+					"type": "object",
+					"title": "Balance info",
+					"required": [
+						"balance",
+						"block_index"
+					],
+					"properties": {
+						"balance": {
+							"title": "Balance",
+							"description": "Balance at block",
+							"$ref": "#/components/schemas/atto_tolar"
+						},
+						"block_index": {
+							"title": "Block index",
+							"description": "Index of the block for which balance is sought.",
+							"$ref": "#/components/schemas/block_index"
+						}
+					}
 				}
 			},
 			"examples": [
@@ -1518,7 +1550,10 @@
 					"result": {
 						"name": "Get balance example result",
 						"description": "Required address have 1 Tolar = 1000000000000000000 attoTolar",
-						"value": "1000000000000000000"
+						"value": {
+							"balance": "1000000000000000000",
+							"block_index": 48
+						}
 					}
 				}
 			]
@@ -1763,7 +1798,7 @@
 					"params": [
 						{
 							"name": "addresses",
-							"value": "54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642"
+							"value": "[54f9f02416d894487e7bbd9d74065f7996cbdbf52bab547642]"
 						},
 						{
 							"name": "limit",
@@ -1883,6 +1918,116 @@
 									"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d0341464333",
 									"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
 									"block_index": 12345
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "tol_getPastEventsFromBlocks",
+			"description": "Returns emitted events by the contract for given block range.",
+			"paramStructure": "by-position",
+			"params": [
+				{
+					"name": "address",
+					"required": true,
+					"description": "Address of the contract.",
+					"schema": {
+						"$ref": "#/components/schemas/address"
+					}
+				},
+				{
+					"name": "topic",
+					"required": true,
+					"description": "Keccak256 of the event name and arguments.",
+					"schema": {
+						"$ref": "#/components/schemas/bytes"
+					}
+				},
+				{
+					"name": "from_block_idx",
+					"required": true,
+					"description": "Start index of block from which events will be pulled (included).",
+					"schema": {
+						"$ref": "#/components/schemas/block_index"
+					}
+				},
+				{
+					"name": "to_block_idx",
+					"required": true,
+					"description": "End index of block from which events will be pulled (included).",
+					"schema": {
+						"$ref": "#/components/schemas/block_index"
+					}
+				}
+			],
+			"result": {
+				"name": "Past events from block range",
+				"description": "Contracts emitted events.",
+				"schema": {
+					"type": "object",
+					"title": "Past events",
+					"required": [
+						"past_events"
+					],
+					"properties": {
+						"past_events": {
+							"title": "Past events",
+							"type": "array",
+							"items": {
+								"$ref": "#/components/schemas/PastEventResponse"
+							}
+						}
+					}
+				}
+			},
+			"examples": [
+				{
+					"name": "Get past events from block range example",
+					"params": [
+						{
+							"name": "address",
+							"value": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb"
+						},
+						{
+							"name": "topic",
+							"value": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928"
+						},
+						{
+							"name": "from_block_idx",
+							"value": 12345
+						},
+						{
+							"name": "to_block_idx",
+							"value": 12346
+						}
+					],
+					"result": {
+						"name": "Get past events from block range example result",
+						"value": {
+							"past_events": [
+								{
+									"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+									"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+									"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_1": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_2": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aaa",
+									"data": "74686973206973206669727374206c617374206576656e74",
+									"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d03414643dd",
+									"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+									"block_index": 12345
+								},
+								{
+									"address": "5484c512b1cf3d45e7506a772b7358375acc571b2930d27deb",
+									"topic": "0d13800e76908f21833df64e9bc413caf783ec15c3453f1e5f7666187a326928",
+									"topic_arg_0": "0000000000000000000000000000000000000000000000000000000000000000",
+									"topic_arg_1": "00000000000000000000000034dcc69921b8bacf14017b4289820150a4a42aa6",
+									"data": "74686973206973207365636f6e64206c617374206576656e74",
+									"transaction_hash": "3114c475957d5353ef70715336c5bf4c25e250287f2d79a34a1a4d0341464333",
+									"block_hash": "0d928eeb95baa6ce0ad292b3dc0f0b050ae0429cc8da1af906658f1bc2072106",
+									"block_index": 12346
 								}
 							]
 						}

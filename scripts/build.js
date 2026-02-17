@@ -38,14 +38,29 @@ const doc = {
       name: "Unknown",
       url: "https://unknown"
     },
-    version: "0.0.0"
+    version: "1.3.0"
   },
   servers: [
     {
-      name: "Local Thin Node",
-      summary: "Simple local thin node server",
-      url: "http://127.0.0.1:8200/jsonrpc",
-    }
+      name: "Mainnet",
+      summary: "[network_id: 1]",
+      url: "https://jsongw.mainnet.tolar.io/jsonrpc"
+    },
+    {
+      name: "Testnet",
+      summary: "[network_id: 2]",
+      url: "https://jsongw.testnet.tolar.io/jsonrpc"
+    },
+    {
+      name: "Stagenet",
+      summary: "[network_id: 3]",
+      url: "https://jsongw.staging.tolar.io/jsonrpc",
+    },
+    {
+      name: "EuChain",
+      summary: "[network_id: 5]",
+      url: "https://jsongw.euchain.org/jsonrpc"
+    },
   ],
   methods: methods,
   components: {
