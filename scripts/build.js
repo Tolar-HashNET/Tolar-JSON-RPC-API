@@ -54,7 +54,7 @@ const doc = {
     {
       name: "Stagenet",
       summary: "[network_id: 3]",
-      url: "https://jsongw.staging.tolar.io/jsonrpc",
+      url: "https://jsongw.stagenet.tolar.io/jsonrpc",
     },
     {
       name: "EuChain",
